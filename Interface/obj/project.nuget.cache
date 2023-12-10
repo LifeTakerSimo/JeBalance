@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "5CCyV8LYj7EQ3rVlIPR61INrfbHezhrHhZNhMx3UBEi7HbxTIn6af8MQpLc/WhfIOhRUSeWiOzoZwHNJImmnow==",
+  "success": true,
+  "projectFilePath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Interface/Interface.csproj",
+  "expectedPackageFiles": [
+    "/Users/simohamedkabbou/.nuget/packages/sqlite/3.13.0/sqlite.3.13.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ucOVLURzpE5m81EVr0NB0W//WqckUUfEgyYDDV4Iwy/4emL7EmrGmXlJ2qM/Jcuzm/hGL1C6UZodtBw/AqbtIA==",
+  "success": true,
+  "projectFilePath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Domain/Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/simohamedkabbou/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/simohamedkabbou/.nuget/packages/sqlite/3.13.0/sqlite.3.13.0.nupkg.sha512"
+  ],
+  "logs": []
+}
