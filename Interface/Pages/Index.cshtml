@@ -5,7 +5,43 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <h1 class="display-4">Bonjour</h1>
+    <!-- Add Denunciation Form -->
+    <form method="post" asp-page-handler="CreateDenunciation">
+        <label>Informateur First Name:</label>
+        <input type="text" name="InformateurFirstName" required /><br />
 
+        <label>Informateur Last Name:</label>
+        <input type="text" name="InformateurLastName" required /><br />
+
+        <label>Informateur Address - Street Number:</label>
+        <input type="text" name="InformateurStreetNumber" required /><br />
+
+        <label>Informateur Address - Street Name:</label>
+        <input type="text" name="InformateurStreetName" required /><br />
+
+        <label>Informateur Address - Postal Code:</label>
+        <input type="text" name="InformateurPostalCode" required /><br />
+
+        <label>Informateur Address - City Name:</label>
+        <input type="text" name="InformateurCityName" required /><br />
+
+        <label>Suspect First Name:</label>
+        <input type="text" name="SuspectFirstName" required /><br />
+
+        <label>Suspect Last Name:</label>
+        <input type="text" name="SuspectLastName" required /><br />
+
+        <label>Country of Evasion:</label>
+        <input type="text" name="CountryEvasion" required /><br />
+
+        <label>Type of Offense:</label>
+        <select name="TypeOfOffense" required>
+            <option value="DissimulationDeRevenus">Dissimulation de Revenus</option>
+            <option value="EvasionFiscale">Évasion Fiscale</option>
+        </select><br />
+
+        <button type="submit">Submit Denunciation</button>
+    </form>
+
+</div>

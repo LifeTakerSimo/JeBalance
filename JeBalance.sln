@@ -7,13 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalance", "JeBalance\JeBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{2687E2B7-8196-4351-9F44-35C6A131D98A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interne", "Interne\Interne.csproj", "{5D7BF586-C647-4DB8-80EF-45523D0CF950}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secret", "Secret\Secret.csproj", "{15EB1BA3-98B2-4B11-A30C-6D9C70B48D65}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{DD9623AE-F27C-4B6D-B1F2-6828BF1A72AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{C7FA6389-44C9-44A9-A427-F265A7CD5769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{8B30DEDA-D4CB-48C2-AC3E-7E45D257E92E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +27,6 @@ Global
 		{2687E2B7-8196-4351-9F44-35C6A131D98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2687E2B7-8196-4351-9F44-35C6A131D98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2687E2B7-8196-4351-9F44-35C6A131D98A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D7BF586-C647-4DB8-80EF-45523D0CF950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D7BF586-C647-4DB8-80EF-45523D0CF950}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D7BF586-C647-4DB8-80EF-45523D0CF950}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D7BF586-C647-4DB8-80EF-45523D0CF950}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15EB1BA3-98B2-4B11-A30C-6D9C70B48D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15EB1BA3-98B2-4B11-A30C-6D9C70B48D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15EB1BA3-98B2-4B11-A30C-6D9C70B48D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15EB1BA3-98B2-4B11-A30C-6D9C70B48D65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD9623AE-F27C-4B6D-B1F2-6828BF1A72AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD9623AE-F27C-4B6D-B1F2-6828BF1A72AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD9623AE-F27C-4B6D-B1F2-6828BF1A72AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,11 +35,57 @@ Global
 		{C7FA6389-44C9-44A9-A427-F265A7CD5769}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7FA6389-44C9-44A9-A427-F265A7CD5769}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7FA6389-44C9-44A9-A427-F265A7CD5769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B30DEDA-D4CB-48C2-AC3E-7E45D257E92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B30DEDA-D4CB-48C2-AC3E-7E45D257E92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B30DEDA-D4CB-48C2-AC3E-7E45D257E92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B30DEDA-D4CB-48C2-AC3E-7E45D257E92E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA56FD80-1E64-4121-96E1-376F964982ED}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 80
+		$4.TabsToSpaces = True
+		$4.scope = text/plain
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-json
+		$0.TextStylePolicy = $6
+		$6.inheritsSet = null
+		$6.scope = text/x-web
+		$0.TextStylePolicy = $7
+		$7.inheritsSet = null
+		$7.scope = text/x-vs
+		$0.TextStylePolicy = $8
+		$8.inheritsSet = null
+		$8.scope = text/x-css
+		$0.TextStylePolicy = $9
+		$9.inheritsSet = null
+		$9.scope = text/x-cshtml-web
+		$0.TextStylePolicy = $10
+		$10.inheritsSet = null
+		$10.scope = text/x-html
+		$0.TextStylePolicy = $11
+		$11.inheritsSet = null
+		$11.scope = text/x-javascript
+		$0.TextStylePolicy = $12
+		$12.inheritsSet = null
+		$12.scope = text/x-jsts
+		$0.TextStylePolicy = $13
+		$13.inheritsSet = null
+		$13.scope = text/x-sql
+		$0.StandardHeader = $14
 	EndGlobalSection
 EndGlobal
