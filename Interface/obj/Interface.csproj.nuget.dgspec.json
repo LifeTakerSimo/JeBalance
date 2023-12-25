@@ -88,7 +88,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
+                "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -101,6 +105,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[7.0.14, )"

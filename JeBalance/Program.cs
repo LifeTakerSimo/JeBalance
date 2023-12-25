@@ -1,5 +1,9 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Infrastructure;
+using JeBalance;
+
+var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+builder.Services.AddInfrastructure();
 
 app.MapGet("/", async (HttpContext context) =>
 {
@@ -8,4 +12,3 @@ app.MapGet("/", async (HttpContext context) =>
 
 app.Run();
 
-// need code to call the initialiser for the data base

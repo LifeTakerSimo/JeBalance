@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1QAW/34vgcwlTA/zFr1DWTtYx6dXSTcVEejBwp4zJb5DcRCjC5g98Vvf/82hgQDxFij+X6CT2PzVIyMdrku2Gg==",
+  "dgSpecHash": "73fN136sJoshhVeAyQBJgF1C225VnHerf7OfeM7JpPUKBoVhdo2aUpAqs/yfqKH6lDMCIFk0mdd1Zx0DWjPppQ==",
   "success": true,
   "projectFilePath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Interface/Interface.csproj",
   "expectedPackageFiles": [
+    "/Users/simohamedkabbou/.nuget/packages/mediatr/12.2.0/mediatr.12.2.0.nupkg.sha512",
+    "/Users/simohamedkabbou/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.data.sqlite/8.0.0/microsoft.data.sqlite.8.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.data.sqlite.core/8.0.0/microsoft.data.sqlite.core.8.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.entityframeworkcore/7.0.14/microsoft.entityframeworkcore.7.0.14.nupkg.sha512",
@@ -16,7 +18,7 @@
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.caching.memory/7.0.0/microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.configuration.abstractions/7.0.0/microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0/microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
-    "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.dependencymodel/7.0.0/microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.logging/7.0.0/microsoft.extensions.logging.7.0.0.nupkg.sha512",
     "/Users/simohamedkabbou/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Model;
 
 namespace JeBalance.SQLLite.Model
 {
     [Table("Person")]
-    public class PersonSQLS
+    public class PersonSQLS : Personne
     {
         [Column("id")]
         public int Id { get; set; }

@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using API;
 using JeBalance.SQLLite;
-using JeBalance;
-
-
-
-
+using Infrastructure;
 namespace API;
 
 public class Program
@@ -19,12 +15,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var services = builder.Services;
+        builder.Services.AddInfrastructure();
 
         // Add services to the container.
 
         // For Entity Framework
         //services.AddDbContext<AuthDbContext>(options =>
-            //options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
+        //options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
         services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
             contextLifetime: ServiceLifetime.Scoped,
@@ -96,16 +93,17 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        /*if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        }*/
 
         app.UseHttpsRedirection();
 
         // Authentication & Authorization
         app.UseAuthentication();
+
         app.UseAuthorization();
 
         app.MapControllers();

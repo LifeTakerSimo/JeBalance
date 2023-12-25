@@ -20,11 +20,13 @@
     <None Remove="SQLLite\" />
     <None Remove="SQLLite\Model\" />
     <None Remove="SQLLite\Configuration\" />
+    <None Remove="Repos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQLLite\" />
     <Folder Include="SQLLite\Model\" />
     <Folder Include="SQLLite\Configuration\" />
+    <Folder Include="Repos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj">

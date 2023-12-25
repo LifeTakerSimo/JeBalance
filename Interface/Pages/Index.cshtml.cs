@@ -5,89 +5,48 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Domain;
+using Domain.Model;
 
 public class IndexModel : PageModel
 {
     private readonly HttpClient _httpClient;
+    private readonly string _apiBaseUrl = "https://your-api-url.com"; // Replace with your API's base URL.
 
     public IndexModel(HttpClient httpClient)
     {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _httpClient = httpClient;
     }
 
-    public async Task<IActionResult> OnPostCreateDenunciationAsync(string informateurFirstName, string informateurLastName,
-    int informateurNumeroVoie, string informateurNomVoie, string informateurCodePostal, string informateurNomCommune,
-    string suspectFirstName, string suspectLastName, int suspectNumeroVoie, string suspectNomVoie,
-    string suspectCodePostal, string suspectNomCommune, string selectedTypeOfOffense, string countryEvasion)
+    public async Task<IActionResult> OnPostCreateDenunciationAsync(string informateurFirstName, string informateurLastName, string countryEvasion, string typeOfOffense)
     {
-        try
+        var denonciation = new
         {
-            Denonciation denonciation = new Denonciation
+            Informant = new
             {
-                Informateur = new PersonneDTO
-                {
-                    Nom = informateurLastName,
-                    Prenom = informateurFirstName, 
-                    Adresse = new Adresse
-                    {
-                        NumeroVoie = informateurNumeroVoie,
-                        NomVoie = informateurNomVoie, 
-                        CodePostal = informateurCodePostal,
-                        NomCommune = informateurNomCommune
-                    }
-                },
-                Suspect = new PersonneDTO
-                {
-                    Nom = suspectLastName, 
-                    Prenom = suspectFirstName, 
-                    Adresse = new Adresse
-                    {
-                        NumeroVoie = suspectNumeroVoie,
-                        NomVoie = suspectNomVoie, 
-                        CodePostal = suspectCodePostal, 
-                        NomCommune = suspectNomCommune
-                    }
-                },
-                Delit = selectedTypeOfOffense, 
-                PaysEvasion = countryEvasion 
-            };
-
-            var jsonDenunciation = JsonSerializer.Serialize(denonciation);
-
-            var request = new HttpRequestMessage
+                FirstName = informateurFirstName,
+                LastName = informateurLastName,
+                // Add other properties of Informant as needed
+            },
+            Suspect = new
             {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://your-api-endpoint-url"),
-                Content = new StringContent(jsonDenunciation, Encoding.UTF8, "application/json")
-            };
+                // Set properties of the suspect
+            },
+            Offense = typeOfOffense,
+            EvasionCountry = countryEvasion
+        };
 
-            var response = await _httpClient.SendAsync(request);
+        var content = new StringContent(JsonSerializer.Serialize(denonciation), Encoding.UTF8, "application/json");
 
-            // Check if the request was successful (status code 200-299)
-            if (response.IsSuccessStatusCode)
-            {
-                // Process the successful response here
-                // For example, show a success message or redirect to another page
-                return RedirectToPage("/SuccessPage");
-            }
-            else
-            {
-                // Handle the error response from the API (non-successful status code)
-                // For example, log the error or display an error message
-                // You can access response.StatusCode, response.ReasonPhrase, etc.
-                // and handle the error accordingly
-                // For now, let's redirect back to the same page
-                return RedirectToPage("/Index");
-            }
+        var response = await _httpClient.PostAsync($"{_apiBaseUrl}/denonciations", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return RedirectToPage("ConfirmationPage");
         }
-        catch (Exception ex)
+        else
         {
-            // Handle any exceptions that might occur during the API call
-            // Log the exception or display an error message
-            // For now, let's redirect back to the same page
-            return RedirectToPage("/Index");
+            ModelState.AddModelError(string.Empty, "There was an error creating the denonciation.");
+            return Page();
         }
     }
-
 }
