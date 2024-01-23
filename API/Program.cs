@@ -7,6 +7,9 @@ using Microsoft.OpenApi.Models;
 using API;
 using JeBalance.SQLLite;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 namespace API;
 
 public class Program
@@ -19,9 +22,7 @@ public class Program
 
         // Add services to the container.
 
-        // For Entity Framework
-        //services.AddDbContext<AuthDbContext>(options =>
-        //options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
+        //For Entity Framework
         services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
             contextLifetime: ServiceLifetime.Scoped,
@@ -33,16 +34,16 @@ public class Program
             //.AddDefaultTokenProviders();
 
         // Adding Authentication
-        //services.AddAuthentication(options =>
-        //{
-            //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        //})
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
 
         // Adding Jwt Bearer
-        //.AddJwtBearer(options =>
-        /*{
+        .AddJwtBearer(options =>
+        {
             options.SaveToken = true;
             options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters()
@@ -53,15 +54,14 @@ public class Program
                 ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
-        });*/
+        });
 
-        //services.AddApplication();
-        //services.AddDomain();
-        //services.AddInfrastructure();
+        services.AddDomain();
+        services.AddInfrastructure();
         services.AddControllers();
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        /*services.AddEndpointsApiExplorer();
+        //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
@@ -89,7 +89,7 @@ public class Program
                     new string[] {}
                 }
             });
-        });*/
+        });
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

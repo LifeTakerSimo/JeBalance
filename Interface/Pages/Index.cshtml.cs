@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Domain.Model;
+using System.Diagnostics;
 
 public class IndexModel : PageModel
 {
     private readonly HttpClient _httpClient;
-    private readonly string _apiBaseUrl = "https://your-api-url.com"; // Replace with your API's base URL.
+    private readonly string _apiBaseUrl = "http://localhost:5059";
 
     public IndexModel(HttpClient httpClient)
     {
@@ -25,11 +26,9 @@ public class IndexModel : PageModel
             {
                 FirstName = informateurFirstName,
                 LastName = informateurLastName,
-                // Add other properties of Informant as needed
             },
             Suspect = new
             {
-                // Set properties of the suspect
             },
             Offense = typeOfOffense,
             EvasionCountry = countryEvasion
@@ -41,7 +40,8 @@ public class IndexModel : PageModel
 
         if (response.IsSuccessStatusCode)
         {
-            return RedirectToPage("ConfirmationPage");
+            Debug.WriteLine($"Informateur: {informateurFirstName} {informateurLastName}, Country of Evasion: {countryEvasion}, Type of Offense: {typeOfOffense}");
+            return Content("The denunciation was received successfully.");
         }
         else
         {
