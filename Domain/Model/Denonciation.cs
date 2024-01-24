@@ -7,8 +7,8 @@ namespace Domain.Model
     {
         public int Id { get; set; }
         public DateTime Timestamp { get; set; }
-        public Personne Informant { get; set; }
-        public Personne Suspect { get; set; }
+        public Person Informant { get; set; }
+        public Person Suspect { get; set; }
         public string Offense { get; set; }
         public string EvasionCountry { get; set; }
         public Response DenonciationResponse { get; set; } 
@@ -17,7 +17,7 @@ namespace Domain.Model
         {
         }
 
-        public Denonciation(int id, DateTime timestamp, Personne informant, Personne suspect, string offense, string evasionCountry)
+        public Denonciation(int id, DateTime timestamp, Person informant, Person suspect, string offense, string evasionCountry)
             : base(id)
         {
             Timestamp = timestamp;

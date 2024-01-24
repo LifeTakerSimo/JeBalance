@@ -19,12 +19,12 @@ namespace Domain.Commands.Denonciations
         {
             var denonciation = new Denonciation
             {
-                Informant = new Personne
+                Informant = new Person
                 {
                     FirstName = command.InformateurFirstName,
                     LastName = command.InformateurLastName,
                 },
-                Suspect = new Personne
+                Suspect = new Person
                 {
                     FirstName = command.SuspectFirstName,
                     LastName = command.SuspectLastName,

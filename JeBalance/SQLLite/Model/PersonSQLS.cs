@@ -5,7 +5,7 @@ using Domain.Model;
 namespace JeBalance.SQLLite.Model
 {
     [Table("Person")]
-    public class PersonSQLS : Personne
+    public class PersonSQLS : Person
     {
         [Column("id")]
         public int Id { get; set; }

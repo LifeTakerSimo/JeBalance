@@ -5,17 +5,17 @@ namespace Domain.Model
 {
     public class Calomniateur : Entity
     {
-        public Personne Personne { get; set; }
+        public Person Person { get; set; }
         public int Id { get; set; }
 
         public Calomniateur() : base(0)
         {
         }
 
-        public Calomniateur(int id, Personne person)
+        public Calomniateur(int id, Person person)
             : base(id)
         {
-            Personne = person;
+            Person = person;
         }
     }
 }

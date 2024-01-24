@@ -6,9 +6,9 @@ namespace JeBalance.Common
 {
     public static class Extensions
     {
-        public static Personne ToDomain(this PersonSQLS sqls)
+        public static Person ToDomain(this PersonSQLS sqls)
         {
-            return new Personne
+            return new Person
             {
                 Id = sqls.Id,
                 FirstName = sqls.FirstName,
@@ -21,7 +21,7 @@ namespace JeBalance.Common
             };
         }
 
-        public static PersonSQLS ToSQLS(this Personne domain)
+        public static PersonSQLS ToSQLS(this Person domain)
         {
             return new PersonSQLS
             {
@@ -100,7 +100,7 @@ namespace JeBalance.Common
             return new Calomniateur
             {
                 Id = sqls.Id,
-                Personne = sqls.Person?.ToDomain() 
+                Person = sqls.Person?.ToDomain() 
             };
         }
 
@@ -111,7 +111,7 @@ namespace JeBalance.Common
             return new CalomniateurSQLS
             {
                 Id = domain.Id,
-                Person = domain.Personne?.ToSQLS() 
+                Person = domain.Person?.ToSQLS() 
             };
         }
 
@@ -122,7 +122,7 @@ namespace JeBalance.Common
             return new Admin
             {
                 Id = sqls.Id,
-                Personne = sqls.Person?.ToDomain() 
+                Person = sqls.Person?.ToDomain() 
             };
         }
 
@@ -133,7 +133,7 @@ namespace JeBalance.Common
             return new AdminSQLS
             {
                 Id = domain.Id,
-                Person = domain.Personne?.ToSQLS()
+                Person = domain.Person?.ToSQLS()
             };
         }
     }

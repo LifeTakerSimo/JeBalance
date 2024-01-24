@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net;
-using Domain.Contracts;
+﻿using Domain.Contracts;
+using Domain.ValueObjects;
 
 namespace Domain.Model
 {
-    public class Personne : Entity
+    public class Person : Entity
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -15,12 +14,22 @@ namespace Domain.Model
         public string CityName { get; set; }
         public bool IsVIP { get; set; }
 
-        public Personne() : base(0)
+        public Person() : base(0)
         {
         }
 
-        public Personne(int id, string firstName, string lastName, string streetNumber, string streetName, string postalCode, string cityName, bool isVIP)
-            : base(id) 
+        public Person(string firstname, string lastname) : this(new Name(firstname), new Name(lastname))
+        {
+        }
+
+        public Person(Name firstName, Name lastName) : base(0)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        public Person(int id, string firstName, string lastName, string streetNumber, string streetName, string postalCode, string cityName, bool isVIP)
+            : base(id)
         {
             FirstName = firstName;
             LastName = lastName;

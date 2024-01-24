@@ -17,12 +17,14 @@
     <None Remove="Contracts\" />
     <None Remove="Commands\" />
     <None Remove="Commands\Denonciation\" />
+    <None Remove="Commands\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Contracts\" />
     <Folder Include="Commands\" />
     <Folder Include="Commands\Denonciation\" />
+    <Folder Include="Commands\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj" />

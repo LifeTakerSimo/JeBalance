@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using API;
 using JeBalance.SQLLite;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using API.Authentication;
 
 namespace API;
 
@@ -23,15 +21,17 @@ public class Program
         // Add services to the container.
 
         //For Entity Framework
+        services.AddDbContext<AuthDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
         services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
             contextLifetime: ServiceLifetime.Scoped,
             optionsLifetime: ServiceLifetime.Transient);
 
         // For Identity
-        //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //.AddEntityFrameworkStores<AuthDbContext>()
-            //.AddDefaultTokenProviders();
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<AuthDbContext>()
+            .AddDefaultTokenProviders();
 
         // Adding Authentication
         services.AddAuthentication(options =>
@@ -93,11 +93,11 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        /*if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-        }*/
+        }
 
         app.UseHttpsRedirection();
 
