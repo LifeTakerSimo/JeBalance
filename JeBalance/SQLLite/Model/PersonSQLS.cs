@@ -7,7 +7,7 @@ namespace JeBalance.SQLLite.Model
     [Table("Person")]
     public class PersonSQLS : Person
     {
-        [Column("id")]
+        [Column("id")] // todo : ADD ROLE AND USERiD INSTEAD OF ID
         public int Id { get; set; }
 
         [Column("first_name")]
@@ -30,6 +30,10 @@ namespace JeBalance.SQLLite.Model
 
         [Column("is_vip")]
         public bool IsVIP { get; set; }
+
+        [Column("NormalizedUserName")]
+        public string NormalizedUserName { get; set; }
+        
     }
 }
 

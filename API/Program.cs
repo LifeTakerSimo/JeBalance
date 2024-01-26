@@ -7,6 +7,8 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using API.Authentication;
+using Serilog.Extensions.Logging.File;
+using Serilog.Extensions.Logging;
 
 namespace API;
 
@@ -59,6 +61,13 @@ public class Program
         services.AddDomain();
         services.AddInfrastructure();
         services.AddControllers();
+
+        // logs
+        services.AddLogging();
+        services.AddLogging(logging =>
+        {
+            logging.AddFile("logs/JeBalance-{Date}.log");
+        });
 
         //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

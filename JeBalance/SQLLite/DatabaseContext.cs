@@ -32,9 +32,7 @@ namespace JeBalance.SQLLite
            modelBuilder.ApplyConfiguration(new ResponseConfiguration());
            modelBuilder.ApplyConfiguration(new CalomniateurConfiguration());
            modelBuilder.ApplyConfiguration(new AdminConfiguration());
-
-
-            base.OnModelCreating(modelBuilder);
+           base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
