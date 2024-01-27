@@ -24,6 +24,12 @@ public class RegisterModel
     public string? Password { get; set; }
 
     [Required(ErrorMessage = "IsVIP")]
-    public string? IsVIP { get; set; }
+    public bool IsVIP { get; set; }
+
+    [Required(ErrorMessage = "IsAdmin")]
+    public bool IsAdmin { get; set; }
+
+    [Required(ErrorMessage = "IsFisc")]
+    public bool IsFisc { get; set; }
 }
 

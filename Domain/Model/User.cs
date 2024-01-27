@@ -7,18 +7,23 @@ namespace Domain.Model
     {
         public int id { get; set; }
         public Person Person { get; set; }
-        public string Role { get; set; }
         public string PasswordHash { get; set; }
         public string? UserName { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsFisc { get; set; }
+        public bool IsVip { get; set; }
 
-        public User(int id, Person person, string role, string hashedPassword, string userName)
+        public User(int id, Person person, string hashedPassword, string userName, bool isAdmin, bool isFisc, bool isVip)
             : base(id)
         {
             Person = person;
-            Role = role;
             PasswordHash = hashedPassword;
             UserName = userName;
+            IsAdmin = isAdmin;
+            IsFisc = isFisc;
+            IsVip = isVip;
         }
+
         public User() : base(0)
         {
         }

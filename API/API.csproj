@@ -49,10 +49,16 @@
     <None Remove="Controllers\" />
     <None Remove="Authentication\" />
     <None Remove="Ressource\" />
+    <None Remove="Controllers\Public\" />
+    <None Remove="Controllers\Interne\" />
+    <None Remove="Controllers\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Authentication\" />
     <Folder Include="Ressource\" />
+    <Folder Include="Controllers\Public\" />
+    <Folder Include="Controllers\Interne\" />
+    <Folder Include="Controllers\Admin\" />
   </ItemGroup>
 </Project>

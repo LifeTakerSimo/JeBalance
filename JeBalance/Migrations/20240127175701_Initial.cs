@@ -24,6 +24,8 @@ namespace JeBalance.Migrations
                     postal_code = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     city_name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     is_vip = table.Column<bool>(type: "INTEGER", nullable: false),
+                    is_admin = table.Column<bool>(type: "INTEGER", nullable: false),
+                    is_fisc = table.Column<bool>(type: "INTEGER", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -106,9 +108,11 @@ namespace JeBalance.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     person_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Role = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: true)
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsFisc = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsVip = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

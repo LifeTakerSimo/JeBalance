@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Domain.Queries.Users;
 using JeBalance.SQLLite;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
@@ -42,6 +43,7 @@ public class AuthenticateController : ControllerBase
         _logger = logger;
         _context = context;
     }
+
 
     [HttpPost]
     [Route("login")]
@@ -98,10 +100,13 @@ public class AuthenticateController : ControllerBase
             var command = new CreateUserCommand(
                 model.Email,
                 model.UserName,
-                hashedPassword, // Pass the hashed password
+                hashedPassword,
                 model.Role,
                 model.FirstName,
-                model.LastName);
+                model.LastName,
+                model.IsVIP,
+                model.IsAdmin,
+                model.IsFisc);
 
             var userId = await _mediator.Send(command); // Dispatch the command
 
@@ -112,10 +117,8 @@ public class AuthenticateController : ControllerBase
         {
             _logger.LogError($"Unexpected error during user registration: {ex.Message}");
 
-            // Check if there is an inner exception
             if (ex.InnerException != null)
             {
-                // Log or print the inner exception
                 _logger.LogError($"Inner Exception: {ex.InnerException.Message}");
             }
 

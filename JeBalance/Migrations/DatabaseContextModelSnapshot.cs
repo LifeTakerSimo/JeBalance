@@ -111,6 +111,14 @@ namespace JeBalance.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("first_name");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("is_admin");
+
+                    b.Property<bool>("IsFisc")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("is_fisc");
+
                     b.Property<bool>("IsVIP")
                         .HasColumnType("INTEGER")
                         .HasColumnName("is_vip");
@@ -183,6 +191,15 @@ namespace JeBalance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsFisc")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsVip")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -190,10 +207,6 @@ namespace JeBalance.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("person_id");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");

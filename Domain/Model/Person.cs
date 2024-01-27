@@ -15,6 +15,9 @@ namespace Domain.Model
         public string CityName { get; set; }
         public bool IsVIP { get; set; }
         public string Email { get; set; }
+        public bool IsFisc { get; set; }
+        public bool IsAdmin { get; set; }
+
 
         public Person() : base(0)
         {
@@ -30,7 +33,7 @@ namespace Domain.Model
             LastName = lastName;
         }
 
-        public Person(int id, string firstName, string lastName, string streetNumber, string streetName, string postalCode, string cityName, bool isVIP, string userName, string email)
+        public Person(int id, string firstName, string lastName, string streetNumber, string streetName, string postalCode, string cityName, bool isVIP, string userName, string email, bool isAdmin, bool isFisc)
             : base(id)
         {
             FirstName = firstName;
@@ -41,8 +44,9 @@ namespace Domain.Model
             CityName = cityName;
             IsVIP = isVIP;
             UserName = userName;
-            Email = Email;
-
+            Email = email;
+            IsFisc = isFisc;
+            IsAdmin = isAdmin;
+        }
     }
-}
 }

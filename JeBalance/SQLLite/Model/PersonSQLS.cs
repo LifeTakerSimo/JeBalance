@@ -27,6 +27,12 @@ namespace JeBalance.SQLLite.Model
         [Column("is_vip")]
         public bool IsVIP { get; set; }
 
+        [Column("is_admin")]
+        public bool IsAdmin { get; set; }
+
+        [Column("is_fisc")]
+        public bool IsFisc { get; set; }
+
         [Column("UserName")]
         public string? UserName { get; set; }
         

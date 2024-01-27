@@ -10,8 +10,11 @@ public class CreateUserCommand : IRequest<int>
     public string Role { get; }
     public string FirstName { get; }
     public string LastName { get; }
+    public bool IsVip { get; }
+    public bool IsAdmin { get; }
+    public bool IsFisc { get; }
 
-    public CreateUserCommand(string email, string username, string password, string role, string firstName, string lastname)
+    public CreateUserCommand(string email, string username, string password, string role, string firstName, string lastname,bool isVip, bool isAdmin, bool isFisc)
     {
         Email = email;
         Username = username;
@@ -19,5 +22,8 @@ public class CreateUserCommand : IRequest<int>
         Role = role;
         FirstName = firstName;
         LastName = lastname;
+        IsVip = isVip;
+        IsFisc = isFisc;
+        IsAdmin = IsAdmin;
     }
 }

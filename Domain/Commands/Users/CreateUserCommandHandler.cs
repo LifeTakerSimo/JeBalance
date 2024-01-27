@@ -29,15 +29,21 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
                 FirstName = command.FirstName,
                 LastName = command.LastName,
                 Email = command.Email,
-                UserName = command.Username
+                UserName = command.Username,
+                IsVIP = command.IsVip,
+                IsAdmin = command.IsAdmin,
+                IsFisc = command.IsFisc,
+
             };
 
             var user = new User(
                 0, 
                 person,
-                command.Role,
                 hashedPassword,
-                command.Username
+                command.Username,
+                person.IsAdmin,
+                person.IsFisc,
+                person.IsVIP
             );
 
             await _userRepository.AddAsync(user);

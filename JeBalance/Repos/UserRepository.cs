@@ -19,7 +19,7 @@ namespace JeBalance.Repos
 
         public async Task<Person> GetByIdAsync(int id)
         {
-            var user = await _context.Users
+            var user = await _context.Users // todo : correct the logic here 
                 .Include(u => u.Person)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
@@ -50,9 +50,10 @@ namespace JeBalance.Repos
                     PostalCode = user.Person.PostalCode,
                     CityName = user.Person.CityName,
                     IsVIP = user.Person.IsVIP,
-                    Email = user.Person.Email
+                    Email = user.Person.Email,
+                    IsAdmin = user.Person.IsAdmin,
+                    IsFisc = user.Person.IsFisc,
                 },
-            Role = user.Role,
                 PasswordHash = user.PasswordHash
             };
 
