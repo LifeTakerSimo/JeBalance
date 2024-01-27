@@ -79,6 +79,7 @@ public class AuthenticateController : ControllerBase
         return Unauthorized();
     }
 
+    [Authorize]
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
