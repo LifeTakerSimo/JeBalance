@@ -32,7 +32,7 @@ namespace JeBalance.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ADMIN", (string)null);
+                    b.ToTable("Admin");
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.CalomniateurSQLS", b =>
@@ -50,7 +50,7 @@ namespace JeBalance.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("CALOMNIATEUR", (string)null);
+                    b.ToTable("Calomniateur");
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.DenonciationSQLS", b =>
@@ -87,21 +87,23 @@ namespace JeBalance.Migrations
 
                     b.HasIndex("SuspectId");
 
-                    b.ToTable("DENONCIATION", (string)null);
+                    b.ToTable("Denonciation");
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.PersonSQLS", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CityName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT")
                         .HasColumnName("city_name");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -120,25 +122,26 @@ namespace JeBalance.Migrations
                         .HasColumnName("last_name");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("TEXT")
                         .HasColumnName("postal_code");
 
                     b.Property<string>("StreetName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("TEXT")
                         .HasColumnName("street_name");
 
                     b.Property<string>("StreetNumber")
-                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("street_number");
 
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UserName");
+
                     b.HasKey("Id");
 
-                    b.ToTable("PERSON", (string)null);
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.ResponseSQLS", b =>
@@ -168,9 +171,38 @@ namespace JeBalance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DenonciationId");
+                    b.HasIndex("DenonciationId")
+                        .IsUnique();
 
                     b.ToTable("RESPONSE", (string)null);
+                });
+
+            modelBuilder.Entity("JeBalance.SQLLite.Model.UserSQLS", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("person_id");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.AdminSQLS", b =>
@@ -217,12 +249,29 @@ namespace JeBalance.Migrations
             modelBuilder.Entity("JeBalance.SQLLite.Model.ResponseSQLS", b =>
                 {
                     b.HasOne("JeBalance.SQLLite.Model.DenonciationSQLS", "Denonciation")
-                        .WithMany()
-                        .HasForeignKey("DenonciationId")
+                        .WithOne("DenonciationResponse")
+                        .HasForeignKey("JeBalance.SQLLite.Model.ResponseSQLS", "DenonciationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Denonciation");
+                });
+
+            modelBuilder.Entity("JeBalance.SQLLite.Model.UserSQLS", b =>
+                {
+                    b.HasOne("JeBalance.SQLLite.Model.PersonSQLS", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("JeBalance.SQLLite.Model.DenonciationSQLS", b =>
+                {
+                    b.Navigation("DenonciationResponse")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

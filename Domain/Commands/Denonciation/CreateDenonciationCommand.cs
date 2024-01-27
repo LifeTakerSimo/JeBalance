@@ -24,4 +24,3 @@ namespace Domain.Commands.Denonciations
         }
     }
 }
-

@@ -39,8 +39,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
             .Ignore(c => c.UserName)
             .Ignore(c => c.EmailConfirmed);
         builder.Entity<ApplicationUser>()
-                .ToTable("PERSON")
-                .Property(u => u.NormalizedUserName).HasMaxLength(256);
+                .ToTable("PERSON");
 
     }
 

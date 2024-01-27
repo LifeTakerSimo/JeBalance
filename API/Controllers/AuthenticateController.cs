@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Logging;
 using Domain.Commands;
+using Domain.Model;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Domain.Queries.Users;
+using JeBalance.SQLLite;
+
 namespace API.Controllers;
 
 [Route("api/[controller]")]
@@ -19,19 +25,22 @@ public class AuthenticateController : ControllerBase
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly IMediator _mediator;
+    private readonly DatabaseContext _context;
 
     public AuthenticateController(
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
         ILogger<AuthenticateController> logger,
-        IMediator mediator)
+        IMediator mediator,
+        DatabaseContext context)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _mediator = mediator;
         _logger = logger;
+        _context = context;
     }
 
     [HttpPost]
@@ -74,83 +83,70 @@ public class AuthenticateController : ControllerBase
     {
         try
         {
-            _logger.LogInformation($"Attempting to register user: {model.Username}");
+            _logger.LogInformation($"Attempting to register user: {model.UserName}");
 
-            var userExists = _userManager.Users
-                .AsEnumerable()
-                .FirstOrDefault(a => a.UserName == model.Username.ToUpper());
+            var userExists = await _mediator.Send(new UserExistsQuery(model.UserName));
 
-            if (userExists != null)
+            if (userExists)
             {
-                _logger.LogWarning($"User {model.Username} already exists.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                _logger.LogWarning($"User {model.UserName} already exists.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User already exists!" });
             }
 
-            ApplicationUser user = new()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
-                Role = model.Role,
-                UserId = 0
-            };
+            var hashedPassword = HashPassword(model.Password);
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-            {
-                _logger.LogError($"Error creating user {model.Username}: {result.Errors}");
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-            }
+            var command = new CreateUserCommand(
+                model.Email,
+                model.UserName,
+                hashedPassword, // Pass the hashed password
+                model.Role,
+                model.FirstName,
+                model.LastName);
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            var userId = await _mediator.Send(command); // Dispatch the command
 
-            if (await _roleManager.RoleExistsAsync(UserRoles.User))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.User);
-            }
-
-            try
-            {
-                var command = new CreateUserCommand(model.Firstname, model.Lastname);
-                var UserId = await _mediator.Send(command);
-                user.UserId = UserId;
-                await _userManager.UpdateAsync(user);
-
-                _logger.LogInformation($"User {model.Username} created successfully.");
-
-                return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error creating user {model.Username}: {ex.Message}");
-                return Ok(new Response { Status = "Success", Message = "User created successfully but without a Driver" });
-            }
+            _logger.LogInformation($"User {model.UserName} created successfully with ID {userId}.");
+            return Ok(new Authentication.Response { Status = "Success", Message = "User created successfully!" });
         }
         catch (Exception ex)
         {
             _logger.LogError($"Unexpected error during user registration: {ex.Message}");
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "An unexpected error occurred during user registration." });
+
+            // Check if there is an inner exception
+            if (ex.InnerException != null)
+            {
+                // Log or print the inner exception
+                _logger.LogError($"Inner Exception: {ex.InnerException.Message}");
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "An unexpected error occurred during user registration." });
         }
+    }
+
+
+    private string HashPassword(string password)
+    {
+        var hasher = new PasswordHasher<ApplicationUser>(); 
+        return hasher.HashPassword(null, password);
     }
 
     [HttpPost]
     [Route("register-admin")]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
     {
-        var userExists = await _userManager.FindByNameAsync(model.Username);
+        var userExists = await _userManager.FindByNameAsync(model.UserName);
         if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User already exists!" });
 
         ApplicationUser user = new()
         {
             Email = model.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = model.Username
+            UserName = model.UserName
         };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
         if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
             await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
@@ -159,7 +155,7 @@ public class AuthenticateController : ControllerBase
         {
             await _userManager.AddToRoleAsync(user, UserRoles.Admin);
         }
-        return Ok(new Response { Status = "Success", Message = "Admin created successfully!" });
+        return Ok(new Authentication.Response { Status = "Success", Message = "Admin created successfully!" });
     }
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)

@@ -24,7 +24,7 @@ namespace JeBalance.SQLLite.Model
         [Column("evasion_country")]
         public string EvasionCountry { get; set; }
 
-        public virtual Response DenonciationResponse { get; set; }
+        public virtual ResponseSQLS DenonciationResponse { get; set; }
 
     }
 }

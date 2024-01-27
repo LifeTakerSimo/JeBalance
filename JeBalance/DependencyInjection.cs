@@ -1,6 +1,9 @@
 ﻿using Domain.Contracts;
+using Domain.Repository;
 using Infrastructure.Repositories;
+using JeBalance.Repos;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Infrastructure
 {
@@ -9,6 +12,8 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IDenonciationRepository, DenonciationRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
 
             return services;
         }

@@ -21,12 +21,17 @@ public class Program
         builder.Services.AddInfrastructure();
 
         // Add services to the container.
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        builder.Services.AddDbContext<DatabaseContext>(option =>
+                    option.UseSqlite(connectionString),
+                    contextLifetime: ServiceLifetime.Scoped,
+                    optionsLifetime: ServiceLifetime.Transient);
 
         //For Entity Framework
         services.AddDbContext<AuthDbContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
+        options.UseSqlite(builder.Configuration.GetConnectionString("@Data Source=/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/JeBalance.db")));
         services.AddDbContext<DatabaseContext>(options =>
-            options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
+            options.UseSqlite(builder.Configuration.GetConnectionString("@Data Source=/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/JeBalance.db")),
             contextLifetime: ServiceLifetime.Scoped,
             optionsLifetime: ServiceLifetime.Transient);
 

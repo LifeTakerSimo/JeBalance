@@ -8,8 +8,6 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<AdminSQLS> builder)
         {
-            builder.ToTable("ADMIN")
-                .HasKey(admin => admin.Id);
         }
     }
 }

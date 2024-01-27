@@ -8,8 +8,7 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<CalomniateurSQLS> builder)
         {
-            builder.ToTable("CALOMNIATEUR")
-                .HasKey(calumniator => calumniator.Id);
+
         }
     }
 }

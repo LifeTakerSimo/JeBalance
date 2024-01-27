@@ -8,7 +8,6 @@ namespace JeBalance.SQLLite.Model
     [Table("Calomniateur")]
     public class CalomniateurSQLS : Calomniateur
     {
-        [Key]
         [Column("id")]
         public int Id { get; set; }
 

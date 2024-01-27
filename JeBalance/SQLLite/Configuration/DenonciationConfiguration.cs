@@ -8,8 +8,6 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<DenonciationSQLS> builder)
         {
-            builder.ToTable("DENONCIATION")
-                .HasKey(denonciation => denonciation.Id);
 
             builder.Property(denonciation => denonciation.Timestamp)
                 .IsRequired();

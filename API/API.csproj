@@ -48,9 +48,11 @@
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Authentication\" />
+    <None Remove="Ressource\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Authentication\" />
+    <Folder Include="Ressource\" />
   </ItemGroup>
 </Project>
