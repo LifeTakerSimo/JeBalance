@@ -30,7 +30,7 @@ namespace JeBalance.Repos
         {
             var user = await _context.Users
                 .Include(u => u.Person)
-                .FirstOrDefaultAsync(u => u.Person.UserName == username);
+                .FirstOrDefaultAsync(u => u.UserName == username);
 
             return user?.Person;
         }
@@ -89,8 +89,11 @@ namespace JeBalance.Repos
 
         public async Task<bool> ExistsByUsernameAsync(string username)
         {
-            return await _context.Users
+            var userExists = await _context.Users
                 .AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
+
+            return !userExists;
         }
+
     }
 }

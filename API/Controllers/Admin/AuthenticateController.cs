@@ -79,7 +79,6 @@ public class AuthenticateController : ControllerBase
         return Unauthorized();
     }
 
-    [Authorize]
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -132,34 +131,6 @@ public class AuthenticateController : ControllerBase
     {
         var hasher = new PasswordHasher<ApplicationUser>(); 
         return hasher.HashPassword(null, password);
-    }
-
-    [HttpPost]
-    [Route("register-admin")]
-    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
-    {
-        var userExists = await _userManager.FindByNameAsync(model.UserName);
-        if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User already exists!" });
-
-        ApplicationUser user = new()
-        {
-            Email = model.Email,
-            SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = model.UserName
-        };
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-
-        if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        {
-            await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-        }
-        return Ok(new Authentication.Response { Status = "Success", Message = "Admin created successfully!" });
     }
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
