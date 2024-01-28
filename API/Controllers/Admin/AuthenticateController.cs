@@ -14,6 +14,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Domain.Queries.Users;
 using JeBalance.SQLLite;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Service;
+using JeBalance.Services;
 
 namespace API.Controllers;
 
@@ -27,6 +29,7 @@ public class AuthenticateController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly IMediator _mediator;
     private readonly DatabaseContext _context;
+    private readonly IPasswordService _passwordService;
 
     public AuthenticateController(
         UserManager<ApplicationUser> userManager,
@@ -34,7 +37,8 @@ public class AuthenticateController : ControllerBase
         IConfiguration configuration,
         ILogger<AuthenticateController> logger,
         IMediator mediator,
-        DatabaseContext context)
+        DatabaseContext context,
+        IPasswordService passwordService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -42,43 +46,64 @@ public class AuthenticateController : ControllerBase
         _mediator = mediator;
         _logger = logger;
         _context = context;
-    }
+        _passwordService = passwordService;
 
+    }
 
     [HttpPost]
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.Username);
-        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+        _logger.LogInformation($"Attempting to login user: {model.UserName}");
+
+        try
         {
-            var userRoles = await _userManager.GetRolesAsync(user);
+            var user = await _mediator.Send(new GetUserQuery(model.UserName));
+            if (user == null || !_passwordService.VerifyPassword(user.PasswordHash, model.Password))
+            {
+                _logger.LogWarning($"User {model.UserName} login failed: Invalid credentials.");
+                return Unauthorized(new Authentication.Response { Status = "Error", Message = "Invalid credentials!" });
+            }
 
             var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-            foreach (var userRole in userRoles)
             {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                new Claim(ClaimTypes.Name, model.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            if (user.IsAdmin)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            }
+
+            if (user.IsFisc)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, "Fisc"));
             }
 
             var token = GetToken(authClaims);
 
+            _logger.LogInformation($"User {model.UserName} logged in successfully.");
             return Ok(new
             {
-                username = user.UserName,
-                role = userRoles.FirstOrDefault(),
-                driverid = user.UserId, // TODO : CHANGE THIS 
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration = token.ValidTo
             });
         }
-        return Unauthorized();
+        catch (Exception ex)
+        {
+            _logger.LogError($"Unexpected error during login: {ex.Message}");
+
+            if (ex.InnerException != null)
+            {
+                _logger.LogError($"Inner Exception: {ex.InnerException.Message}");
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "An unexpected error occurred during login." });
+        }
     }
 
+    [Authorize]
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -95,7 +120,7 @@ public class AuthenticateController : ControllerBase
                 return StatusCode(StatusCodes.Status500InternalServerError, new Authentication.Response { Status = "Error", Message = "User already exists!" });
             }
 
-            var hashedPassword = HashPassword(model.Password);
+            var hashedPassword = _passwordService.HashPassword(model.Password);
 
             var command = new CreateUserCommand(
                 model.Email,
@@ -126,12 +151,6 @@ public class AuthenticateController : ControllerBase
         }
     }
 
-
-    private string HashPassword(string password)
-    {
-        var hasher = new PasswordHasher<ApplicationUser>(); 
-        return hasher.HashPassword(null, password);
-    }
 
     private JwtSecurityToken GetToken(List<Claim> authClaims)
     {

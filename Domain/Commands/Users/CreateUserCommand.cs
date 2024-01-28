@@ -24,6 +24,6 @@ public class CreateUserCommand : IRequest<int>
         LastName = lastname;
         IsVip = isVip;
         IsFisc = isFisc;
-        IsAdmin = IsAdmin;
+        IsAdmin = isAdmin;
     }
 }

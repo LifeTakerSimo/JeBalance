@@ -14,6 +14,5 @@ namespace JeBalance.SQLLite.Model
 
         [ForeignKey("PersonId")]
         public virtual PersonSQLS Person { get; set; }
-
     }
 }

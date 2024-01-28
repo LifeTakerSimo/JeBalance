@@ -22,7 +22,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     {
         try
         {
-            var hashedPassword = HashPassword(command.Password);
 
             var person = new Person
             {
@@ -39,7 +38,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
             var user = new User(
                 0, 
                 person,
-                hashedPassword,
+                command.Password,
                 command.Username,
                 person.IsAdmin,
                 person.IsFisc,

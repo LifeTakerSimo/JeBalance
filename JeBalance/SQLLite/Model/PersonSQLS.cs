@@ -35,7 +35,7 @@ namespace JeBalance.SQLLite.Model
 
         [Column("UserName")]
         public string? UserName { get; set; }
-        
+
     }
 }
 

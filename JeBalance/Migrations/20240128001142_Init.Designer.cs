@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeBalance.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240127175701_Initial")]
-    partial class Initial
+    [Migration("20240128001142_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

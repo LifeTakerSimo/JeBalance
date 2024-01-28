@@ -18,7 +18,6 @@ namespace Domain.Model
         public bool IsFisc { get; set; }
         public bool IsAdmin { get; set; }
 
-
         public Person() : base(0)
         {
         }

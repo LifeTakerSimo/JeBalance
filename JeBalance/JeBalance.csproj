@@ -15,23 +15,26 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="SQLLite\" />
     <None Remove="SQLLite\Model\" />
     <None Remove="SQLLite\Configuration\" />
     <None Remove="Repos\" />
+    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQLLite\" />
     <Folder Include="SQLLite\Model\" />
     <Folder Include="SQLLite\Configuration\" />
     <Folder Include="Repos\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataBase\DataBase.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\DataBase\DataBase.csproj" />
   </ItemGroup>
 </Project>

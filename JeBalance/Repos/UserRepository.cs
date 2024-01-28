@@ -26,13 +26,11 @@ namespace JeBalance.Repos
             return user?.Person;
         }
 
-        public async Task<Person> GetByUsernameAsync(string username)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
             var user = await _context.Users
-                .Include(u => u.Person)
-                .FirstOrDefaultAsync(u => u.UserName == username);
-
-            return user?.Person;
+                .FirstOrDefaultAsync(u => u.Person.UserName == username);
+            return user;
         }
 
         public async Task<bool> AddAsync(User user)
@@ -49,12 +47,15 @@ namespace JeBalance.Repos
                     StreetName = user.Person.StreetName,
                     PostalCode = user.Person.PostalCode,
                     CityName = user.Person.CityName,
-                    IsVIP = user.Person.IsVIP,
+                    IsVIP = user.IsVip,
                     Email = user.Person.Email,
-                    IsAdmin = user.Person.IsAdmin,
-                    IsFisc = user.Person.IsFisc,
+                    IsAdmin = user.IsAdmin,
+                    IsFisc = user.IsFisc,
                 },
-                PasswordHash = user.PasswordHash
+                PasswordHash = user.PasswordHash,
+                IsAdmin = user.IsAdmin,
+                IsVip = user.IsVip,
+                IsFisc = user.IsFisc
             };
 
             await _context.Users.AddAsync(userSQLS);
@@ -90,9 +91,9 @@ namespace JeBalance.Repos
         public async Task<bool> ExistsByUsernameAsync(string username)
         {
             var userExists = await _context.Users
-                .AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
+                .AnyAsync(u => u.Person.UserName.ToUpper() == username.ToUpper());
 
-            return !userExists;
+            return userExists;
         }
 
     }
