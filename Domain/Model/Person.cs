@@ -47,5 +47,22 @@ namespace Domain.Model
             IsFisc = isFisc;
             IsAdmin = isAdmin;
         }
+
+        public Person(string informantFirstName, string informantLastName, string streetName, string streetNumber, string postalCode, string cityName, string email, string userName)
+        : base(0)
+        {
+            FirstName = informantFirstName;
+            LastName = informantLastName;
+            StreetName = streetName;
+            StreetNumber = streetNumber;
+            PostalCode = postalCode;
+            CityName = cityName;
+            Email = email;
+            IsVIP = false;
+            UserName = userName;
+            IsFisc = false;
+            IsAdmin = false;
+        }
+
     }
 }

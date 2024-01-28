@@ -1,6 +1,7 @@
 ﻿using Domain.Contracts;
 using Domain.Model;
 using JeBalance.SQLLite;
+using JeBalance.SQLLite.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,36 @@ namespace Infrastructure.Repositories
 
         public async Task<Denonciation> CreateDenonciationAsync(Denonciation denonciation)
         {
-            _context.Denonciations.Add((JeBalance.SQLLite.Model.DenonciationSQLS)denonciation);
+            var denonciationSQLS = new DenonciationSQLS
+            {
+                Id = denonciation.Id,
+                Timestamp = denonciation.Timestamp,
+                Informant = MapToPersonSQLS(denonciation.Informant),
+                Suspect = MapToPersonSQLS(denonciation.Suspect),
+                Offense = denonciation.Offense,
+                EvasionCountry = denonciation.EvasionCountry,
+            };
+
+            await _context.Denonciations.AddAsync(denonciationSQLS);
             await _context.SaveChangesAsync();
             return denonciation;
+        }
+
+        private PersonSQLS MapToPersonSQLS(Person person)
+        {
+            return new PersonSQLS
+            {
+                Id = person.Id,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                UserName = person?.UserName,
+                StreetNumber = person.StreetNumber,
+                StreetName = person.StreetName,
+                PostalCode = person.PostalCode,
+                CityName = person.CityName,
+                IsVIP = person.IsVIP,
+                Email = person.Email,
+            };
         }
 
         public async Task<IEnumerable<Denonciation>> GetAllDenonciationsAsync()
@@ -29,7 +57,7 @@ namespace Infrastructure.Repositories
             return await _context.Denonciations.ToListAsync();
         }
 
-        public async Task<Denonciation> GetDenonciationByIdAsync(int id)
+        public async Task<Denonciation> GetDenonciationAsync(string userName, int id)
         {
             return await _context.Denonciations.FindAsync(id);
         }

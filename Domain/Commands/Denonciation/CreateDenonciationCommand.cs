@@ -1,26 +1,25 @@
 ﻿using System;
 using MediatR;
+using Domain.Model;
 
 namespace Domain.Commands.Denonciations
 {
     public class CreateDenonciationCommand : IRequest<int>
     {
-        public string InformateurFirstName { get; set; }
-        public string InformateurLastName { get; set; }
-        public string InformateurStreetNumber { get; set; }
-        public string InformateurStreetName { get; set; }
-        public string InformateurPostalCode { get; set; }
-        public string InformateurCityName { get; set; }
-        public string SuspectFirstName { get; set; }
-        public string SuspectLastName { get; set; }
-        public string CountryEvasion { get; set; }
-        public string TypeOfOffense { get; set; }
+        public Person Informant { get; private set; }
+        public Person Suspect { get; private set; }
+        public string Offense { get; private set; }
+        public string EvasionCountry { get; private set; }
 
-        public CreateDenonciationCommand(string informateurFirstName, string informateurLastName)
+        public CreateDenonciationCommand(
+        string informantFirstName, string informantLastName, string streetName, string streetNumber, string postalCode, string cityName, string email, string informantUserName,
+        string suspectFirstName, string suspectLastName, string sstreetName, string sstreetNumber, string spostalCode, string scityName, string semail,
+        string offense, string evasionCountry)
         {
-            /* TODO : finish this */
-            InformateurFirstName = informateurFirstName;
-            InformateurLastName = informateurLastName;
+            Informant = new Person(informantFirstName, informantLastName, streetName, streetNumber, postalCode, cityName, email, informantUserName);
+            Suspect = new Person(suspectFirstName, suspectLastName, sstreetName, sstreetNumber, spostalCode, scityName, semail, string.Empty);
+            Offense = offense;
+            EvasionCountry = evasionCountry;
         }
     }
 }

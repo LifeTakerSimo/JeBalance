@@ -7,7 +7,7 @@ namespace Domain.Contracts
     {
         Task<Denonciation> CreateDenonciationAsync(Denonciation denonciation);
         Task<IEnumerable<Denonciation>> GetAllDenonciationsAsync();
-        Task<Denonciation> GetDenonciationByIdAsync(int id);
+        Task<Denonciation> GetDenonciationAsync(string UserName, int id);
         Task<IEnumerable<Denonciation>> GetNonTreatedDenonciationsAsync();
         Task UpdateDenonciationAsync(Denonciation denonciation);
         Task DeleteDenonciationAsync(int id);

@@ -53,6 +53,7 @@
     <None Remove="Controllers\Public\" />
     <None Remove="Controllers\Interne\" />
     <None Remove="Controllers\Admin\" />
+    <None Remove="Parameters\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -61,5 +62,6 @@
     <Folder Include="Controllers\Public\" />
     <Folder Include="Controllers\Interne\" />
     <Folder Include="Controllers\Admin\" />
+    <Folder Include="Parameters\" />
   </ItemGroup>
 </Project>
