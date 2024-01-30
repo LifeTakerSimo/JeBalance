@@ -9,6 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using API.Authentication;
 using Serilog.Extensions.Logging.File;
 using Serilog.Extensions.Logging;
+using System.Configuration;
+using JeBalance.Configuration;
+using Domain.Repository;
+using JeBalance.Repos;
+using Microsoft.Extensions.Options;
 
 namespace API;
 
@@ -27,18 +32,20 @@ public class Program
                     contextLifetime: ServiceLifetime.Scoped,
                     optionsLifetime: ServiceLifetime.Transient);
 
-        //For Entity Framework
-        services.AddDbContext<AuthDbContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("@Data Source=/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/JeBalance.db")));
-        services.AddDbContext<DatabaseContext>(options =>
-            options.UseSqlite(builder.Configuration.GetConnectionString("@Data Source=/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/JeBalance.db")),
-            contextLifetime: ServiceLifetime.Scoped,
-            optionsLifetime: ServiceLifetime.Transient);
+
+        builder.Services.AddDbContext<AuthDbContext>(options =>
+            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
         // For Identity
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<AuthDbContext>()
             .AddDefaultTokenProviders();
+        // Database
+        services.Configure<DBSettings>(builder.Configuration.GetSection("Jebalance"));
+
+
+
 
         // Adding Authentication
         services.AddAuthentication(options =>

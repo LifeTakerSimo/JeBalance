@@ -23,6 +23,8 @@
     <None Remove="Queries\Users\" />
     <None Remove="Service\" />
     <None Remove="Queries\Denonciations\" />
+    <None Remove="Commands\Persons\" />
+    <None Remove="Queries\Persons\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
@@ -36,6 +38,8 @@
     <Folder Include="Queries\Users\" />
     <Folder Include="Service\" />
     <Folder Include="Queries\Denonciations\" />
+    <Folder Include="Commands\Persons\" />
+    <Folder Include="Queries\Persons\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj" />

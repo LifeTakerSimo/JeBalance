@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj": {}
+    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {}
   },
   "projects": {
-    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj": {
+    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj",
-        "projectName": "DataBase",
-        "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj",
+        "projectUniqueName": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj",
+        "projectName": "Database",
+        "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj",
         "packagesPath": "/Users/simohamedkabbou/.nuget/packages/",
-        "outputPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/obj/",
+        "outputPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simohamedkabbou/.nuget/NuGet/NuGet.Config"
