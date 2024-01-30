@@ -11,7 +11,7 @@ namespace Domain.Model
         public Person Suspect { get; set; }
         public string Offense { get; set; }
         public string EvasionCountry { get; set; }
-        public Response DenonciationResponse { get; set; } 
+        public Response DenonciationResponse { get; set; }
 
         public Denonciation() : base(0)
         {

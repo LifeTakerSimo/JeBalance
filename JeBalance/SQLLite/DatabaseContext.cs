@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using JeBalance.SQLLite.Configuration;
 using JeBalance.SQLLite.Model;
-using Domain.Model;
 
 namespace JeBalance.SQLLite
 {

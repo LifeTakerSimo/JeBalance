@@ -13,6 +13,7 @@ namespace JeBalance.SQLLite.Model
 
         [Column("person_id")]
         public int PersonId { get; set; }
+
         [ForeignKey("PersonId")]
         public virtual PersonSQLS Person { get; set; }
     }

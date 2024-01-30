@@ -7,7 +7,7 @@ namespace API.Ressource
  
     public class DenonciationDTO
     {
-        private Denonciation denonciation;
+        private DenonciationDTO denonciation;
 
         public DenonciationDTO()
         {

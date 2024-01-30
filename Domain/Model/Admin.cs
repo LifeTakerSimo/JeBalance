@@ -12,10 +12,10 @@ namespace Domain.Model
         {
         }
 
-        public Admin(int id, Person person)
+        public Admin(int id, Person Person)
             : base(id)
         {
-            Person = person;
+            Person = Person;
         }
     }
 }

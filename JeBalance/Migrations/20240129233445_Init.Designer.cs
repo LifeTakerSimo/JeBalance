@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeBalance.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240128001142_Init")]
+    [Migration("20240129233445_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -137,6 +137,10 @@ namespace JeBalance.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("postal_code");
 
+                    b.Property<int?>("Rejection")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("rejection");
+
                     b.Property<string>("StreetName")
                         .HasMaxLength(200)
                         .HasColumnType("TEXT")
@@ -171,9 +175,8 @@ namespace JeBalance.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("denonciation_id");
 
-                    b.Property<string>("ResponseType")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
+                    b.Property<bool>("ResponseType")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("response_type");
 
                     b.Property<DateTime>("Timestamp")
@@ -185,7 +188,7 @@ namespace JeBalance.Migrations
                     b.HasIndex("DenonciationId")
                         .IsUnique();
 
-                    b.ToTable("RESPONSE", (string)null);
+                    b.ToTable("Response", (string)null);
                 });
 
             modelBuilder.Entity("JeBalance.SQLLite.Model.UserSQLS", b =>

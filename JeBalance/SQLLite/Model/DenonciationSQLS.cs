@@ -9,20 +9,20 @@ namespace JeBalance.SQLLite.Model
     public class DenonciationSQLS : Denonciation
     {
         [Column("id")]
-        public int Id { get; set; }
+        public new int Id { get; set; }
 
         [Column("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public new DateTime Timestamp { get; set; }
 
         public virtual PersonSQLS Informant { get; set; }
 
         public virtual PersonSQLS Suspect { get; set; }
 
         [Column("offense")]
-        public string Offense { get; set; }
+        public new string Offense { get; set; }
 
         [Column("evasion_country")]
-        public string EvasionCountry { get; set; }
+        public new string EvasionCountry { get; set; }
 
         public virtual ResponseSQLS DenonciationResponse { get; set; }
 

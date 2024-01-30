@@ -1,8 +1,10 @@
 ﻿using Domain.Contracts;
 using Domain.Model;
+using JeBalance.Common;
 using JeBalance.SQLLite;
 using JeBalance.SQLLite.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,38 +20,15 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Denonciation> CreateDenonciationAsync(Denonciation denonciation)
+        public async Task<int> CreateDenonciationAsync(Denonciation denonciation)
         {
-            var denonciationSQLS = new DenonciationSQLS
-            {
-                Id = denonciation.Id,
-                Timestamp = denonciation.Timestamp,
-                Informant = MapToPersonSQLS(denonciation.Informant),
-                Suspect = MapToPersonSQLS(denonciation.Suspect),
-                Offense = denonciation.Offense,
-                EvasionCountry = denonciation.EvasionCountry,
-            };
+            var denonciationSQLS = denonciation.ToSQLS();
+            denonciationSQLS.Timestamp = DateTime.UtcNow.AddMonths(2);
 
             await _context.Denonciations.AddAsync(denonciationSQLS);
             await _context.SaveChangesAsync();
-            return denonciation;
-        }
 
-        private PersonSQLS MapToPersonSQLS(Person person)
-        {
-            return new PersonSQLS
-            {
-                Id = person.Id,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                UserName = person?.UserName,
-                StreetNumber = person.StreetNumber,
-                StreetName = person.StreetName,
-                PostalCode = person.PostalCode,
-                CityName = person.CityName,
-                IsVIP = person.IsVIP,
-                Email = person.Email,
-            };
+            return denonciationSQLS.Id;
         }
 
         public async Task<IEnumerable<Denonciation>> GetAllDenonciationsAsync()
@@ -59,8 +38,14 @@ namespace Infrastructure.Repositories
 
         public async Task<Denonciation> GetDenonciationAsync(string userName, int id)
         {
-            return await _context.Denonciations.FindAsync(id);
+            var denonciationSQLS = await _context.Denonciations
+                .Include(d => d.Informant)
+                .Include(d => d.Suspect)
+                .SingleOrDefaultAsync(d => d.Id == id);
+
+            return denonciationSQLS?.ToDomain();
         }
+
 
         public async Task<IEnumerable<Denonciation>> GetNonTreatedDenonciationsAsync()
         {

@@ -27,6 +27,7 @@ namespace JeBalance.Migrations
                     is_admin = table.Column<bool>(type: "INTEGER", nullable: false),
                     is_fisc = table.Column<bool>(type: "INTEGER", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    rejection = table.Column<int>(type: "INTEGER", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -126,21 +127,21 @@ namespace JeBalance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RESPONSE",
+                name: "Response",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     timestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    response_type = table.Column<string>(type: "TEXT", nullable: false),
+                    response_type = table.Column<bool>(type: "INTEGER", nullable: false),
                     amount = table.Column<decimal>(type: "TEXT", nullable: true),
                     denonciation_id = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RESPONSE", x => x.id);
+                    table.PrimaryKey("PK_Response", x => x.id);
                     table.ForeignKey(
-                        name: "FK_RESPONSE_Denonciation_denonciation_id",
+                        name: "FK_Response_Denonciation_denonciation_id",
                         column: x => x.denonciation_id,
                         principalTable: "Denonciation",
                         principalColumn: "id",
@@ -168,8 +169,8 @@ namespace JeBalance.Migrations
                 column: "SuspectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RESPONSE_denonciation_id",
-                table: "RESPONSE",
+                name: "IX_Response_denonciation_id",
+                table: "Response",
                 column: "denonciation_id",
                 unique: true);
 
@@ -189,7 +190,7 @@ namespace JeBalance.Migrations
                 name: "Calomniateur");
 
             migrationBuilder.DropTable(
-                name: "RESPONSE");
+                name: "Response");
 
             migrationBuilder.DropTable(
                 name: "User");

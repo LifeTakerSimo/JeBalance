@@ -17,7 +17,12 @@ namespace JeBalance.Common
                 StreetName = sqls.StreetName,
                 PostalCode = sqls.PostalCode,
                 CityName = sqls.CityName,
-                IsVIP = sqls.IsVIP
+                IsVIP = sqls.IsVIP,
+                UserName = sqls.UserName,
+                Rejection = sqls.Rejection,
+                IsFisc = sqls.IsFisc,
+                IsAdmin = sqls.IsAdmin,
+                Email = sqls.Email
             };
         }
 
@@ -28,15 +33,19 @@ namespace JeBalance.Common
                 Id = domain.Id,
                 FirstName = domain.FirstName,
                 LastName = domain.LastName,
+                UserName = domain?.UserName,
                 StreetNumber = domain.StreetNumber,
                 StreetName = domain.StreetName,
                 PostalCode = domain.PostalCode,
                 CityName = domain.CityName,
-                IsVIP = domain.IsVIP
+                IsVIP = domain.IsVIP,
+                Email = domain.Email,
+                IsAdmin = domain.IsAdmin,
+                IsFisc = domain.IsFisc,
+                Rejection = domain.Rejection,
             };
         }
 
-        // Denonciation conversion methods
         public static Denonciation ToDomain(this DenonciationSQLS sqls)
         {
             return new Denonciation
@@ -46,7 +55,7 @@ namespace JeBalance.Common
                 Informant = sqls.Informant.ToDomain(), 
                 Suspect = sqls.Suspect.ToDomain(),
                 Offense = sqls.Offense,
-                EvasionCountry = sqls.EvasionCountry
+                EvasionCountry = sqls.EvasionCountry,
             };
         }
 
@@ -54,12 +63,12 @@ namespace JeBalance.Common
         {
             return new DenonciationSQLS
             {
-                Id = domain.Id,
                 Timestamp = domain.Timestamp,
                 Informant = domain.Informant.ToSQLS(), 
                 Suspect = domain.Suspect.ToSQLS(),
                 Offense = domain.Offense,
-                EvasionCountry = domain.EvasionCountry
+                EvasionCountry = domain.EvasionCountry,
+                                
             };
         }
 
@@ -78,18 +87,18 @@ namespace JeBalance.Common
             };
         }
 
-        public static ResponseSQLS ToSQLS(this Response domain)
+        public static ResponseSQLS ToSQLS(this Response Person)
         {
-            if (domain == null) return null;
+            if (Person == null) return null;
 
             return new ResponseSQLS
             {
-                Id = domain.Id,
-                Timestamp = domain.Timestamp,
-                ResponseType = domain.ResponseType,
-                Amount = domain.Amount,
-                DenonciationId = domain.DenonciationId,
-                Denonciation = domain.Denonciation?.ToSQLS() 
+                Id = Person.Id,
+                Timestamp = Person.Timestamp,
+                ResponseType = Person.ResponseType,
+                Amount = Person.Amount,
+                DenonciationId = Person.DenonciationId,
+                Denonciation = Person.Denonciation?.ToSQLS() 
             };
         }
 
@@ -104,14 +113,14 @@ namespace JeBalance.Common
             };
         }
 
-        public static CalomniateurSQLS ToSQLS(this Calomniateur domain)
+        public static CalomniateurSQLS ToSQLS(this Calomniateur Person)
         {
-            if (domain == null) return null;
+            if (Person == null) return null;
 
             return new CalomniateurSQLS
             {
-                Id = domain.Id,
-                Person = domain.Person?.ToSQLS() 
+                Id = Person.Id,
+                Person = Person.Person?.ToSQLS() 
             };
         }
 
@@ -126,15 +135,30 @@ namespace JeBalance.Common
             };
         }
 
-        public static AdminSQLS ToSQLS(this Admin domain)
+        public static AdminSQLS ToSQLS(this Admin Person)
         {
-            if (domain == null) return null;
+            if (Person == null) return null;
 
             return new AdminSQLS
             {
-                Id = domain.Id,
-                Person = domain.Person?.ToSQLS()
+                Id = Person.Id,
+                Person = Person.Person?.ToSQLS()
             };
         }
+
+        public static UserSQLS ToSQLS(this User domain)
+        {
+            if (domain == null) return null;
+
+            return new UserSQLS
+            {
+                Person = domain.Person.ToSQLS(),
+                PasswordHash = domain.PasswordHash,
+                IsAdmin = domain.IsAdmin,
+                IsVip = domain.IsVip,
+                IsFisc = domain.IsFisc
+            };
+        }
+
     }
 }

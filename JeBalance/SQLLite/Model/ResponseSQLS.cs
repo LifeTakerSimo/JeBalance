@@ -9,19 +9,20 @@ namespace JeBalance.SQLLite.Model
     {
         [Key]
         [Column("id")]
-        public int Id { get; set; }
+        public new int Id { get; set; }
 
         [Column("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public new DateTime Timestamp { get; set; }
 
         [Column("response_type")]
-        public string ResponseType { get; set; }
+        public new bool ResponseType { get; set; }
 
         [Column("amount")]
-        public decimal? Amount { get; set; }
+        public new decimal? Amount { get; set; }
 
         [Column("denonciation_id")]
-        public int? DenonciationId { get; set; }
+        public new int? DenonciationId { get; set; }
+
         [ForeignKey("DenonciationId")]
         public virtual DenonciationSQLS Denonciation { get; set; }
     }

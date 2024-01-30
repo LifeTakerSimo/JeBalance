@@ -17,7 +17,7 @@ namespace Domain.Model
         public string Email { get; set; }
         public bool IsFisc { get; set; }
         public bool IsAdmin { get; set; }
-
+        public int? Rejection { get; set; }
         public Person() : base(0)
         {
         }

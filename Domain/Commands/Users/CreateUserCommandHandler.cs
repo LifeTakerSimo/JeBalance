@@ -11,7 +11,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
 {
     private readonly IUserRepository _userRepository;
 
-    public CreateUserCommandHandler(IUserRepository userRepository /*, IRoleRepository roleRepository*/)
+    public CreateUserCommandHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     }
@@ -20,8 +20,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     {
         try
         {
-
-            var person = new Person
+            var Person = new Person
             {
                 FirstName = command.FirstName,
                 LastName = command.LastName,
@@ -35,12 +34,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
 
             var user = new User(
                 0, 
-                person,
+                Person,
                 command.Password,
                 command.Username,
-                person.IsAdmin,
-                person.IsFisc,
-                person.IsVIP
+                Person.IsAdmin,
+                Person.IsFisc,
+                Person.IsVIP
             );
 
             await _userRepository.AddAsync(user);

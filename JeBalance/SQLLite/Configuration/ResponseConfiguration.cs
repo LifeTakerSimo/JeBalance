@@ -8,7 +8,7 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<ResponseSQLS> builder)
         {
-            builder.ToTable("RESPONSE")
+            builder.ToTable("Response")
                 .HasKey(response => response.Id);
 
             builder.Property(response => response.Timestamp)

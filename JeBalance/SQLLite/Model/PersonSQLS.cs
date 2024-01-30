@@ -7,34 +7,37 @@ namespace JeBalance.SQLLite.Model
     public class PersonSQLS : Person
     {
         [Column("first_name")]
-        public string FirstName { get; set; }
+        public new string FirstName { get; set; }
 
         [Column("last_name")]
-        public string LastName { get; set; }
+        public new string LastName { get; set; }
 
         [Column("street_number")]
-        public string? StreetNumber { get; set; }
+        public new string? StreetNumber { get; set; }
 
         [Column("street_name")]
-        public string? StreetName { get; set; }
+        public new string? StreetName { get; set; }
 
         [Column("postal_code")]
-        public string? PostalCode { get; set; }
+        public new string? PostalCode { get; set; }
 
         [Column("city_name")]
-        public string? CityName { get; set; }
+        public new string? CityName { get; set; }
 
         [Column("is_vip")]
-        public bool IsVIP { get; set; }
+        public new bool IsVIP { get; set; }
 
         [Column("is_admin")]
-        public bool IsAdmin { get; set; }
+        public new bool IsAdmin { get; set; }
 
         [Column("is_fisc")]
-        public bool IsFisc { get; set; }
+        public new bool IsFisc { get; set; }
 
         [Column("UserName")]
-        public string? UserName { get; set; }
+        public new string? UserName { get; set; }
+
+        [Column("rejection")]
+        public new int? Rejection { get; set; }
 
     }
 }

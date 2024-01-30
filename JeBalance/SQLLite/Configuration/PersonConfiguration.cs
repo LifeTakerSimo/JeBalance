@@ -8,19 +8,19 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<PersonSQLS> builder)
         {
-            builder.Property(person => person.FirstName)
+            builder.Property(Person => Person.FirstName)
                 .HasMaxLength(100);
 
-            builder.Property(person => person.LastName)
+            builder.Property(Person => Person.LastName)
                 .HasMaxLength(100);
 
-            builder.Property(person => person.StreetName)
+            builder.Property(Person => Person.StreetName)
                 .HasMaxLength(200);
 
-            builder.Property(person => person.PostalCode)
+            builder.Property(Person => Person.PostalCode)
                 .HasMaxLength(20);
 
-            builder.Property(person => person.CityName)
+            builder.Property(Person => Person.CityName)
                 .HasMaxLength(100);
 
         }

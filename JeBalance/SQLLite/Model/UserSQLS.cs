@@ -9,8 +9,7 @@ namespace JeBalance.SQLLite.Model
     public class UserSQLS : User
     {
         [Column("person_id")]
-
-        public int PersonId { get; set; }
+        public new int PersonId { get; set; }
 
         [ForeignKey("PersonId")]
         public virtual PersonSQLS Person { get; set; }

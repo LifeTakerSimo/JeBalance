@@ -9,29 +9,33 @@ using System.Threading.Tasks;
 
 namespace JeBalance.Repos
 {
-    public class UserRepository : IUserRepository
+    public class PersonRepository : IPersonRepository
     {
         private readonly DatabaseContext _context;
 
-        public UserRepository(DatabaseContext context)
+        public PersonRepository(DatabaseContext context)
         {
             _context = context;
         }
 
         public async Task<Person> GetByIdAsync(int id)
         {
-            var user = await _context.Users  
-                .Include(u => u.Person)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            return user?.Person;
+            var person = await _context.Persons.FirstOrDefaultAsync(p => p.Id == id);
+            return person;
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username)
+        public async Task<Person> GetByUsernameAsync(string username)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Person.UserName == username);
-            return user;
+            var person = await _context.Persons.FirstOrDefaultAsync(p => p.UserName == username);
+            return person;
+        }
+
+        public async Task<bool> ExistsByUsernameAsync(string username)
+        {
+            var userExists = await _context.Persons
+                .AnyAsync(u => u.UserName.ToUpper() == username.ToUpper());
+
+            return userExists;
         }
 
         public async Task<bool> AddAsync(User user)
@@ -66,14 +70,6 @@ namespace JeBalance.Repos
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> ExistsByUsernameAsync(string username)
-        {
-            var userExists = await _context.Users
-                .AnyAsync(u => u.Person.UserName.ToUpper() == username.ToUpper());
-
-            return userExists;
         }
 
     }

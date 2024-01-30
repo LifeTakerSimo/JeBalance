@@ -39,7 +39,7 @@ public class AuthDbContext : IdentityDbContext<ApplicationUser>
             .Ignore(c => c.UserName)
             .Ignore(c => c.EmailConfirmed);
         builder.Entity<ApplicationUser>()
-                .ToTable("PERSON");
+                .ToTable("Person");
 
     }
 

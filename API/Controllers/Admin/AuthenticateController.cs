@@ -133,7 +133,7 @@ public class AuthenticateController : ControllerBase
                 model.IsAdmin,
                 model.IsFisc);
 
-            var userId = await _mediator.Send(command); // Dispatch the command
+            var userId = await _mediator.Send(command);
 
             _logger.LogInformation($"User {model.UserName} created successfully with ID {userId}.");
             return Ok(new Authentication.Response { Status = "Success", Message = "User created successfully!" });

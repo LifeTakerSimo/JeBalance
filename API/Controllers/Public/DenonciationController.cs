@@ -42,7 +42,7 @@ public class DenonciationController : ControllerBase
         }
         var query = new GetDenonciationById(parameter.UserName, parameter.Id);
         var denonciation = await _mediator.Send(query);
-
+        
         if (denonciation == null)
         {
             return NotFound($"Denonciation with ID {parameter.Id} not found.");
@@ -50,10 +50,7 @@ public class DenonciationController : ControllerBase
 
         Response.Headers.Add("X-Custom-UserName", parameter.UserName);
         Response.Headers.Add("X-Custom-Id", parameter.Id.ToString());
-
-        //var denonciationDto = new DenonciationDTO(denonciation);
-
-        return Ok();
+        return Ok(denonciation);
     }
 
 }
