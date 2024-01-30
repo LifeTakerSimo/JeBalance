@@ -8,7 +8,7 @@ using Domain.Repository;
 
 namespace Domain.Commands.Denonciations
 {
-    public class CreateDenonciationCommandHandler : IRequestHandler<CreateDenonciationCommand, int>
+    public class CreateDenonciationCommandHandler : IRequestHandler<CreateDenonciationCommand, Guid>
     {
         private readonly IDenonciationRepository _denonciationRepository;
         private readonly IPersonRepository _personRepository;
@@ -19,7 +19,7 @@ namespace Domain.Commands.Denonciations
             _personRepository = personRepository;
         }
 
-        public async Task<int> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
         {
             var informantTask = _personRepository.GetByUsernameAsync(command.Informant.UserName);
             var suspectTask = _personRepository.GetByUsernameAsync(command.Suspect.UserName);

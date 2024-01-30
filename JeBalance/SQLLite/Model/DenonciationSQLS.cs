@@ -26,6 +26,10 @@ namespace JeBalance.SQLLite.Model
 
         public virtual ResponseSQLS DenonciationResponse { get; set; }
 
+        [Column("denonciation_id")]
+        public Guid DenonciationId { get; set; }
+
+
     }
 }
 

@@ -20,11 +20,9 @@ namespace JeBalance.SQLLite.Model
         [Column("amount")]
         public new decimal? Amount { get; set; }
 
-        [Column("denonciation_id")]
-        public new int? DenonciationId { get; set; }
+        [ForeignKey("denonciation_id")]
+        public Guid DenonciationId { get; set; }
 
-        [ForeignKey("DenonciationId")]
-        public virtual DenonciationSQLS Denonciation { get; set; }
     }
 }
 

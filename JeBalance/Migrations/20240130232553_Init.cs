@@ -36,22 +36,19 @@ namespace JeBalance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Admin",
+                name: "Response",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    person_id = table.Column<int>(type: "INTEGER", nullable: false)
+                    timestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    response_type = table.Column<bool>(type: "INTEGER", nullable: false),
+                    amount = table.Column<decimal>(type: "TEXT", nullable: true),
+                    DenonciationId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Admin", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Admin_Person_person_id",
-                        column: x => x.person_id,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Response", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,35 +65,6 @@ namespace JeBalance.Migrations
                     table.ForeignKey(
                         name: "FK_Calomniateur_Person_person_id",
                         column: x => x.person_id,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Denonciation",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    timestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    InformantId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SuspectId = table.Column<int>(type: "INTEGER", nullable: false),
-                    offense = table.Column<string>(type: "TEXT", nullable: false),
-                    evasion_country = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Denonciation", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Denonciation_Person_InformantId",
-                        column: x => x.InformantId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Denonciation_Person_SuspectId",
-                        column: x => x.SuspectId,
                         principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -127,36 +95,57 @@ namespace JeBalance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Response",
+                name: "Denonciation",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     timestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    response_type = table.Column<bool>(type: "INTEGER", nullable: false),
-                    amount = table.Column<decimal>(type: "TEXT", nullable: true),
-                    denonciation_id = table.Column<int>(type: "INTEGER", nullable: false)
+                    InformantId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SuspectId = table.Column<int>(type: "INTEGER", nullable: false),
+                    offense = table.Column<string>(type: "TEXT", nullable: false),
+                    evasion_country = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    DenonciationResponseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    denonciation_id = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Response", x => x.id);
+                    table.PrimaryKey("PK_Denonciation", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Response_Denonciation_denonciation_id",
-                        column: x => x.denonciation_id,
-                        principalTable: "Denonciation",
+                        name: "FK_Denonciation_Person_InformantId",
+                        column: x => x.InformantId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Denonciation_Person_SuspectId",
+                        column: x => x.SuspectId,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Denonciation_Response_DenonciationResponseId",
+                        column: x => x.DenonciationResponseId,
+                        principalTable: "Response",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Admin_person_id",
-                table: "Admin",
-                column: "person_id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Calomniateur_person_id",
                 table: "Calomniateur",
                 column: "person_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Denonciation_denonciation_id",
+                table: "Denonciation",
+                column: "denonciation_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Denonciation_DenonciationResponseId",
+                table: "Denonciation",
+                column: "DenonciationResponseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Denonciation_InformantId",
@@ -169,12 +158,6 @@ namespace JeBalance.Migrations
                 column: "SuspectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Response_denonciation_id",
-                table: "Response",
-                column: "denonciation_id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_User_person_id",
                 table: "User",
                 column: "person_id");
@@ -184,19 +167,16 @@ namespace JeBalance.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Admin");
-
-            migrationBuilder.DropTable(
                 name: "Calomniateur");
 
             migrationBuilder.DropTable(
-                name: "Response");
+                name: "Denonciation");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Denonciation");
+                name: "Response");
 
             migrationBuilder.DropTable(
                 name: "Person");

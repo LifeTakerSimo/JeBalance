@@ -7,7 +7,7 @@ namespace Domain.Model
         public DateTime Timestamp { get; set; }
         public bool ResponseType { get; set; }
         public decimal? Amount { get; set; }
-        public int? DenonciationId { get; set; }
+        public Guid DenonciationId { get; set; }
         public Denonciation? Denonciation { get; set; }
     }
 }

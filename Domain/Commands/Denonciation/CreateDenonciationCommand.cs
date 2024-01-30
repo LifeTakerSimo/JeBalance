@@ -4,7 +4,7 @@ using Domain.Model;
 
 namespace Domain.Commands.Denonciations
 {
-    public class CreateDenonciationCommand : IRequest<int>
+    public class CreateDenonciationCommand : IRequest<Guid>
     {
         public Person Informant { get; private set; }
         public Person Suspect { get; private set; }

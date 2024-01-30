@@ -1,4 +1,5 @@
-﻿using JeBalance.SQLLite.Model;
+﻿using System.Reflection.Emit;
+using JeBalance.SQLLite.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,6 +18,9 @@ namespace JeBalance.SQLLite.Configuration
 
             builder.Property(denonciation => denonciation.EvasionCountry)
                 .HasMaxLength(100);
+
+            builder.HasIndex(d => d.DenonciationId)
+                 .IsUnique();
         }
     }
 }

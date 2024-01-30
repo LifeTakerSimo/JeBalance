@@ -68,6 +68,7 @@ namespace JeBalance.Common
                 Suspect = domain.Suspect.ToSQLS(),
                 Offense = domain.Offense,
                 EvasionCountry = domain.EvasionCountry,
+                DenonciationId = domain.DenonciationId,
                                 
             };
         }
@@ -83,7 +84,6 @@ namespace JeBalance.Common
                 ResponseType = sqls.ResponseType,
                 Amount = sqls.Amount,
                 DenonciationId = sqls.DenonciationId,
-                Denonciation = sqls.Denonciation?.ToDomain() 
             };
         }
 
@@ -98,7 +98,6 @@ namespace JeBalance.Common
                 ResponseType = Person.ResponseType,
                 Amount = Person.Amount,
                 DenonciationId = Person.DenonciationId,
-                Denonciation = Person.Denonciation?.ToSQLS() 
             };
         }
 
@@ -121,28 +120,6 @@ namespace JeBalance.Common
             {
                 Id = Person.Id,
                 Person = Person.Person?.ToSQLS() 
-            };
-        }
-
-        public static Admin ToDomain(this AdminSQLS sqls)
-        {
-            if (sqls == null) return null;
-
-            return new Admin
-            {
-                Id = sqls.Id,
-                Person = sqls.Person?.ToDomain() 
-            };
-        }
-
-        public static AdminSQLS ToSQLS(this Admin Person)
-        {
-            if (Person == null) return null;
-
-            return new AdminSQLS
-            {
-                Id = Person.Id,
-                Person = Person.Person?.ToSQLS()
             };
         }
 

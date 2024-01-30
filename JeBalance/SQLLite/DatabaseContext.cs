@@ -13,7 +13,6 @@ namespace JeBalance.SQLLite
         public DbSet<DenonciationSQLS> Denonciations { get; set; }
         public DbSet<ResponseSQLS> Responses { get; set; }
         public DbSet<CalomniateurSQLS> Calomniateurs { get; set; }
-        public DbSet<AdminSQLS> Admins { get; set; }
         public DbSet<UserSQLS> Users { get; set; }
 
         public DatabaseContext()
@@ -31,7 +30,6 @@ namespace JeBalance.SQLLite
            modelBuilder.ApplyConfiguration(new DenonciationConfiguration());
            modelBuilder.ApplyConfiguration(new ResponseConfiguration());
            modelBuilder.ApplyConfiguration(new CalomniateurConfiguration());
-           modelBuilder.ApplyConfiguration(new AdminConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

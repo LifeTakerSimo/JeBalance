@@ -54,8 +54,6 @@ public class AdminController : ControllerBase
         }
     }
 
-
-    // Delete a VIP
     [HttpDelete("delete-vip/{userName}")]
     public async Task<IActionResult> DeleteVip(string userName)
     {
@@ -73,7 +71,6 @@ public class AdminController : ControllerBase
         }
     }
 
-    // Get VIP information
     [HttpGet("get-vip/{userName}")]
     public async Task<IActionResult> GetVip(string userName)
     {
