@@ -1,48 +1,184 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Page d'accueil";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bonjour</h1>
-    <!-- Add Denunciation Form -->
-    <form method="post" asp-page-handler="CreateDenunciation">
-        <label>Informateur First Name:</label>
-        <input type="text" name="InformateurFirstName" required /><br />
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <img src="/images/Logo.png" alt="JB Logo" class="mb-3" style="max-height: 100px;"> <!-- Adjust the max-height as needed -->
 
-        <label>Informateur Last Name:</label>
-        <input type="text" name="InformateurLastName" required /><br />
+        <h1 class="display-4">Bienvenue sur JeBalance</h1>
+        <p class="lead">Votre plateforme dédiée à la dénonciation citoyenne.</p>
+    </div>
 
-        <label>Informateur Address - Street Number:</label>
-        <input type="text" name="InformateurStreetNumber" /><br />
+    <form method="post" asp-page-handler="CreateDenunciation" class="needs-validation" novalidate>
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Informations sur l'Informateur</h2>
+                <!-- Informateur First Name -->
+                <div class="form-group">
+                    <label for="InformateurFirstName">Prénom :</label>
+                    <input type="text" class="form-control" id="InformateurFirstName" name="InformateurFirstName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Informateur Last Name -->
+                <div class="form-group">
+                    <label for="InformateurLastName">Nom :</label>
+                    <input type="text" class="form-control" id="InformateurLastName" name="InformateurLastName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Informateur Address -->
+                <div class="form-group">
+                    <label for="InformateurStreetNumber">Numéro de rue :</label>
+                    <input type="text" class="form-control" id="InformateurStreetNumber" name="InformateurStreetNumber" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="InformateurStreetName">Nom de rue :</label>
+                    <input type="text" class="form-control" id="InformateurStreetName" name="InformateurStreetName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="InformateurPostalCode">Code Postal :</label>
+                    <input type="text" class="form-control" id="InformateurPostalCode" name="InformateurPostalCode" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="InformateurCityName">Ville :</label>
+                    <input type="text" class="form-control" id="InformateurCityName" name="InformateurCityName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Informateur Email -->
+                <div class="form-group">
+                    <label for="InformateurEmail">Email :</label>
+                    <input type="email" class="form-control" id="InformateurEmail" name="InformateurEmail" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="InformateurUsername">Username :</label>
+                    <input type="text" class="form-control" id="InformateurUsername" name="InformateurUsername" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
 
-        <label>Informateur Address - Street Name:</label>
-        <input type="text" name="InformateurStreetName"  /><br />
+            </div>
+            <div class="col">
+                <h2>Informations sur le Suspect</h2>
+                <!-- Suspect First Name -->
+                <div class="form-group">
+                    <label for="SuspectFirstName">Prénom :</label>
+                    <input type="text" class="form-control" id="SuspectFirstName" name="SuspectFirstName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Suspect Last Name -->
+                <div class="form-group">
+                    <label for="SuspectLastName">Nom :</label>
+                    <input type="text" class="form-control" id="SuspectLastName" name="SuspectLastName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Suspect Address -->
+                <div class="form-group">
+                    <label for="SuspectStreetNumber">Numéro de rue :</label>
+                    <input type="text" class="form-control" id="SuspectStreetNumber" name="SuspectStreetNumber" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="SuspectStreetName">Nom de rue :</label>
+                    <input type="text" class="form-control" id="SuspectStreetName" name="SuspectStreetName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="SuspectPostalCode">Code Postal :</label>
+                    <input type="text" class="form-control" id="SuspectPostalCode" name="SuspectPostalCode" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <div class="form-group">
+                    <label for="SuspectCityName">Ville :</label>
+                    <input type="text" class="form-control" id="SuspectCityName" name="SuspectCityName" required>
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+                <!-- Suspect Email -->
+                <div class="form-group">
+                    <label for="SuspectEmail">Email :</label>
+                    <input type="email" class="form-control" id="SuspectEmail" name="SuspectEmail">
+                    <div class="invalid-feedback">Ce champ est obligatoire.</div>
+                </div>
+            </div>
+        </div>
 
-        <label>Informateur Address - Postal Code:</label>
-        <input type="text" name="InformateurPostalCode"  /><br />
+        <div class="mb-4">
+            <h2>Informations sur la dénonciation</h2>
+            <!-- Country of Evasion -->
+            <div class="form-group">
+                <label for="CountryEvasion">Pays d'évasion :</label>
+                <input type="text" class="form-control" id="CountryEvasion" name="CountryEvasion" required>
+                <div class="invalid-feedback">Ce champ est obligatoire.</div>
+            </div>
+            <!-- Type of Offense -->
+            <div class="form-group">
+                <label for="TypeOfOffense">Type d'infraction :</label>
+                <select class="form-control" id="TypeOfOffense" name="TypeOfOffense" required>
+                    <option value="DissimulationDeRevenus">Dissimulation de Revenus</option>
+                    <option value="EvasionFiscale">Évasion Fiscale</option>
+                </select>
+                <div class="invalid-feedback">Veuillez sélectionner une option.</div>
+            </div>
+        </div>
 
-        <label>Informateur Address - City Name:</label>
-        <input type="text" name="InformateurCityName" required /><br />
-
-        <label>Suspect First Name:</label>
-        <input type="text" name="SuspectFirstName" required /><br />
-
-        <label>Suspect Last Name:</label>
-        <input type="text" name="SuspectLastName" required /><br />
-
-        <label>Country of Evasion:</label>
-        <input type="text" name="CountryEvasion" required /><br />
-
-        <label>Type of Offense:</label>
-        <select name="TypeOfOffense" required>
-            <option value="DissimulationDeRevenus">Dissimulation de Revenus</option>
-            <option value="EvasionFiscale">Évasion Fiscale</option>
-        </select><br />
-
-        <button type="submit">Submit Denunciation</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Soumettre la dénonciation</button>
+        </div>
     </form>
-
 </div>
 
+<script>document.addEventListener("DOMContentLoaded", function () {
+        'use strict';
+
+        var submitBtn = document.getElementById('submitBtn');
+        var form = document.getElementsByClassName('needs-validation')[0]; // Assuming there's only one form
+
+        submitBtn.addEventListener('click', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+
+            // If the form is valid, submit the data using fetch API or XMLHttpRequest
+            if (form.checkValidity()) {
+                var formData = new FormData(form);
+                var object = {};
+                formData.forEach(function (value, key) {
+                    object[key] = value;
+                });
+                var json = JSON.stringify(object);
+
+                fetch('YOUR_API_ENDPOINT', { // Replace YOUR_API_ENDPOINT with your actual API endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: json,
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        // Handle success, maybe redirect or display a success message
+                    })
+                    .catch((error) => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                        // Handle error, display error message to the user
+                    });
+            }
+        }, false);
+    });</script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
