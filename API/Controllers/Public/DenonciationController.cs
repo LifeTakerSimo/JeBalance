@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Ressource;
+using Microsoft.AspNetCore.Cors;
 
 namespace API.Controllers;
 
@@ -19,7 +20,9 @@ public class DenonciationController : ControllerBase
         _mediator = mediator;
     }
 
+    [EnableCors("AllowRazorPageOrigin")]
     [HttpPost]
+    [Route("create_denonciation")]
     public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationDTO resource)
     {
         var command = new CreateDenonciationCommand(
@@ -32,7 +35,9 @@ public class DenonciationController : ControllerBase
 
         return Ok(new { DenonciationId = denonciationId });
     }
-
+    
+    [EnableCors("AllowRazorPageOrigin")]
+    [Route("get_denonciation")]
     [HttpGet]
     public async Task<IActionResult> GetDenonciationById([FromQuery] GetDenonciationParameter parameter)
     {

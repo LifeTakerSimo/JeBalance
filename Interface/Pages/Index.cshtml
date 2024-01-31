@@ -11,7 +11,7 @@
         <h1 class="display-4">Bienvenue sur JeBalance</h1>
         <p class="lead">Votre plateforme dédiée à la dénonciation citoyenne.</p>
     </div>
-
+    <div id="responseMessage" class="alert" style="display: none;"></div>
     <form method="post" asp-page-handler="CreateDenunciation" class="needs-validation" novalidate>
         <div class="row mb-4">
             <div class="col">
@@ -132,53 +132,73 @@
 </div>
 
 <script>document.addEventListener("DOMContentLoaded", function () {
-        'use strict';
+        var form = document.querySelector('form.needs-validation');
 
-        var submitBtn = document.getElementById('submitBtn');
-        var form = document.getElementsByClassName('needs-validation')[0]; // Assuming there's only one form
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+            event.stopPropagation();
+        } else {
+            var formData = new FormData(form);
+            var denunciation = {
+                informant: {
+                    firstName: formData.get('InformateurFirstName'),
+                    lastName: formData.get('InformateurLastName'),
+                    streetNumber: formData.get('InformateurStreetNumber'),
+                    streetName: formData.get('InformateurStreetName'),
+                    postalCode: formData.get('InformateurPostalCode'),
+                    cityName: formData.get('InformateurCityName'),
+                    userName: formData.get('InformateurUsername'),
+                    email: formData.get('InformateurEmail')
+                },
+                suspect: {
+                    firstName: formData.get('SuspectFirstName'),
+                    lastName: formData.get('SuspectLastName'),
+                    streetNumber: formData.get('SuspectStreetNumber'),
+                    streetName: formData.get('SuspectStreetName'),
+                    postalCode: formData.get('SuspectPostalCode'),
+                    cityName: formData.get('SuspectCityName'),
+                    email: formData.get('SuspectEmail')
+                },
+                offense: formData.get('TypeOfOffense'),
+                evasionCountry: formData.get('CountryEvasion')
+            };
 
-        submitBtn.addEventListener('click', function (event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
+            var json = JSON.stringify(denunciation);
 
-            // If the form is valid, submit the data using fetch API or XMLHttpRequest
-            if (form.checkValidity()) {
-                var formData = new FormData(form);
-                var object = {};
-                formData.forEach(function (value, key) {
-                    object[key] = value;
-                });
-                var json = JSON.stringify(object);
-
-                fetch('YOUR_API_ENDPOINT', { // Replace YOUR_API_ENDPOINT with your actual API endpoint
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: json,
+            fetch(`${apiBaseUrl}/api/Denonciation/create_denonciation`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: json
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(data);
-                        // Handle success, maybe redirect or display a success message
-                    })
-                    .catch((error) => {
-                        console.error('There has been a problem with your fetch operation:', error);
-                        // Handle error, display error message to the user
-                    });
-            }
-        }, false);
+                .then(data => {
+                    var messageElement = document.getElementById('responseMessage');
+                    messageElement.textContent = 'La dénonciation a été créée avec succès. Votre identifiant de référence est :' + data.denonciationId;
+                    messageElement.className = 'alert alert-success';
+                    messageElement.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    var messageElement = document.getElementById('responseMessage');
+                    messageElement.textContent = 'Error: ' + error.message;
+                    messageElement.className = 'alert alert-danger'; 
+                    messageElement.style.display = 'block'; 
+                });
+
+        }
+        form.classList.add('was-validated');
+    });
+
     });</script>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var apiBaseUrl = '@Model.ApiBaseUrl';
+</script>

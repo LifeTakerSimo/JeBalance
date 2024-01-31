@@ -7,19 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 
-public class IndexModel : PageModel
+public class FindDenonciationModel : PageModel
 {
     private readonly HttpClient _httpClient;
     private readonly string _apiBaseUrl = "https://localhost:7286";
 
-    public IndexModel(HttpClient httpClient)
+    public FindDenonciationModel(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
     public string ApiBaseUrl => _apiBaseUrl;
 
-    public async Task<IActionResult> OnPostCreateDenunciationAsync()
+    public async Task<IActionResult> OnGetDenonciation()
     {
         return RedirectToPage();
     }

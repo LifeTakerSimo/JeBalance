@@ -4,14 +4,14 @@
     "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Interface/Interface.csproj": {}
   },
   "projects": {
-    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
+    "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj",
-        "projectName": "Database",
-        "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj",
+        "projectUniqueName": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj",
+        "projectName": "DataBase",
+        "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj",
         "packagesPath": "/Users/simohamedkabbou/.nuget/packages/",
-        "outputPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/obj/",
+        "outputPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simohamedkabbou/.nuget/NuGet/NuGet.Config"
@@ -98,11 +98,7 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {
-              "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
-                "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -175,9 +171,6 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
-                "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj"
-              },
               "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Domain/Domain.csproj": {
                 "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Domain/Domain.csproj"
               },
@@ -200,6 +193,10 @@
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[7.0.14, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.11, )"
             },
             "SQLite": {
               "target": "Package",
@@ -252,8 +249,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj": {
-                "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Database/Database.csproj"
+              "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj": {
+                "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/DataBase/DataBase.csproj"
               },
               "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Domain/Domain.csproj": {
                 "projectPath": "/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/Domain/Domain.csproj"

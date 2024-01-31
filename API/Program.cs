@@ -84,6 +84,17 @@ public class Program
             logging.AddFile("logs/JeBalance-{Date}.log");
         });
 
+        //interface
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowRazorPageOrigin", builder =>
+            {
+                builder.WithOrigins("https://localhost:7199")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+            });
+        });
+
         //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
@@ -129,6 +140,8 @@ public class Program
         app.UseAuthentication();
 
         app.UseAuthorization();
+        app.UseCors("AllowRazorPageOrigin");
+
 
         app.MapControllers();
 

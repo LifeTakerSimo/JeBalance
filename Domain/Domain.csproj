@@ -39,7 +39,4 @@
     <Folder Include="Commands\Persons\" />
     <Folder Include="Queries\Persons\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj" />
-  </ItemGroup>
 </Project>

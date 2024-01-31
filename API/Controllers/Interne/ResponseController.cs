@@ -12,7 +12,7 @@ using Domain.Commands.Responses;
 
 namespace API.Controllers;
 
-//[Authorize(Roles = "Fisc")]
+[Authorize(Roles = "Fisc")]
 [ApiController]
 [Route("api/[controller]")]
 public class ResponseController : ControllerBase

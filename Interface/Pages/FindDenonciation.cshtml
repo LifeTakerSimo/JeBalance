@@ -1,0 +1,100 @@
+﻿@page "FindDenonciationModel"
+@inject HttpClient Http
+@model FindDenonciationModel
+
+
+<h3>Recherche de dénonciation</h3>
+
+<div class="container">
+    <div id="responseMessage" class="alert" style="display: none;"></div>
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="DenonciationId">ID de la dénonciation :</label>
+            <input type="text" class="form-control" id="DenonciationId" required>
+        </div>
+        <div class="form-group">
+            <label for="InformateurUsername">Nom d'utilisateur de l'informateur :</label>
+            <input type="text" class="form-control" id="InformateurUsername" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var apiBaseUrl = '@Model.ApiBaseUrl'; // Ensure this is set correctly in your Razor page model.
+
+    document.getElementById('searchForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var denonciationId = document.getElementById('DenonciationId').value.trim();
+        var username = document.getElementById('InformateurUsername').value.trim();
+
+        // Validate Guid format for denonciationId before sending the request
+        if (!denonciationId.match(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/)) {
+            alert('L\'ID de la dénonciation doit être au format GUID.');
+            return;
+        }
+
+        // Corrected endpoint usage based on your Swagger documentation
+        fetch(`${apiBaseUrl}/api/Denonciation/get_denonciation?Id=${denonciationId}&UserName=${encodeURIComponent(username)}`, {
+            method: 'GET' // GET is the default method, but it's good to be explicit.
+        })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('Dénonciation non trouvée avec l\'ID fourni.');
+                } else if (response.status === 400) {
+                    throw new Error('Paramètres invalides.');
+                } else {
+                    throw new Error('Réponse du réseau non OK: ' + response.statusText);
+                }
+            }
+            return response.json();
+        })
+            .then(data => {
+                // Handle success
+                console.log(data);
+                var treatedMessage = data.isTreated
+                    ? "Votre dénonciation a été traitée."
+                    : "Votre dénonciation n'a pas encore été traitée.";
+
+                var formattedData = `
+        <div>Résultat trouvé:</div>
+        <ul>
+            <li>Date de création: ${new Date(data.timestamp).toLocaleString()}</li>
+            <li>Informateur:
+                <ul>
+                    <li>Prénom: ${data.informant.firstName}</li>
+                    <li>Nom: ${data.informant.lastName}</li>
+                    <li>Email: ${data.informant.email}</li>
+                    <li>Adresse: ${data.informant.streetNumber} ${data.informant.streetName}, ${data.informant.postalCode} ${data.informant.cityName}</li>
+                </ul>
+            </li>
+            <li>Suspect:
+                <ul>
+                    <li>Prénom: ${data.suspect.firstName}</li>
+                    <li>Nom: ${data.suspect.lastName}</li>
+                    <li>Email: ${data.suspect.email}</li>
+                    <li>Adresse: ${data.suspect.streetNumber} ${data.suspect.streetName}, ${data.suspect.postalCode} ${data.suspect.cityName}</li>
+                </ul>
+            </li>
+            <li>Infraction: ${data.offense}</li>
+            <li>Pays d'évasion: ${data.evasionCountry}</li>
+            <li>État de la dénonciation: <strong>${treatedMessage}</strong></li>
+        </ul>
+    `;
+
+                document.getElementById('responseMessage').innerHTML = formattedData;
+                document.getElementById('responseMessage').className = 'alert alert-success';
+                document.getElementById('responseMessage').style.display = 'block';
+            })
+
+        .catch(error => {
+            console.error('Erreur:', error);
+            document.getElementById('responseMessage').textContent = error.message;
+            document.getElementById('responseMessage').className = 'alert alert-danger';
+            document.getElementById('responseMessage').style.display = 'block';
+        });
+    });
+});
+</script>

@@ -1,5 +1,4 @@
 ﻿using Domain.Contracts;
-using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Model
 {

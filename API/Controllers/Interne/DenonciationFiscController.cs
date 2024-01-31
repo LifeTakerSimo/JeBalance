@@ -11,7 +11,7 @@ using Domain.Queries.Persons;
 
 namespace API.Controllers;
 
-//[Authorize(Roles = "Fisc")]
+[Authorize(Roles = "Fisc")]
 [ApiController]
 [Route("api/[controller]")]
 public class DenonciationFiscController : ControllerBase
