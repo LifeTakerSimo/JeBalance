@@ -26,7 +26,9 @@ public class DenonciationFiscController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize(Roles = "Fisc")]
     [HttpGet]
+    [Route("get_all_denonciations")]
     public async Task<IActionResult> GetAllDenonciationNoResponse()
     {
         try

@@ -36,7 +36,7 @@ public class DenonciationController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetDenonciationById([FromQuery] GetDenonciationParameter parameter)
     {
-        if (parameter == null || string.IsNullOrWhiteSpace(parameter.UserName) || parameter.Id <= 0)
+        if (parameter == null || string.IsNullOrWhiteSpace(parameter.UserName))
         {
             return BadRequest("Invalid parameters.");
         }

@@ -29,10 +29,8 @@
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Contracts\" />
-    <Folder Include="Commands\" />
     <Folder Include="Commands\Denonciation\" />
     <Folder Include="Commands\Users\" />
-    <Folder Include="Repository\" />
     <Folder Include="Queries\" />
     <Folder Include="Queries\" />
     <Folder Include="Queries\Users\" />

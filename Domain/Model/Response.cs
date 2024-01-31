@@ -8,7 +8,6 @@ namespace Domain.Model
         public bool ResponseType { get; set; }
         public decimal? Amount { get; set; }
         public Guid DenonciationId { get; set; }
-        public Denonciation? Denonciation { get; set; }
     }
 }
 

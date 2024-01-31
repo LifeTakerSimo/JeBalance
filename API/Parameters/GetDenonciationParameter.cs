@@ -5,7 +5,7 @@ using Domain.Model;
 namespace API.Parameters;
 public class GetDenonciationParameter
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public string UserName { get; set; }

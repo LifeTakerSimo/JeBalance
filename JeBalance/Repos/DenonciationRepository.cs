@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,12 +41,12 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<Denonciation> GetDenonciationAsync(string userName, int id)
+        public async Task<Denonciation> GetDenonciationAsync(string userName, Guid id)
         {
             var denonciationSQLS = await _context.Denonciations
                 .Include(d => d.Informant)
                 .Include(d => d.Suspect)
-                .SingleOrDefaultAsync(d => d.Id == id);
+                .SingleOrDefaultAsync(d => d.DenonciationId == id);
 
             return denonciationSQLS?.ToDomain();
         }
@@ -76,22 +77,43 @@ namespace Infrastructure.Repositories
 
                 var command = connection.CreateCommand();
                 command.CommandText =
-                    "SELECT * FROM Denonciation AS D " +
-                    "INNER JOIN Response AS R ON D.denonciation_id = denonciation_id" +
-                    "WHERE response_type IS NULL";
+                    "SELECT D.denonciation_id, D.timestamp, D.evasion_country, D.offense, D.isTreated, " +
+                    "I.first_name AS informant_first_name, I.last_name AS informant_last_name, " +
+                    "S.first_name AS suspect_first_name, S.last_name AS suspect_last_name " +
+                    "FROM Denonciation AS D " +
+                    "LEFT JOIN Person AS I ON D.InformantId = I.Id " +
+                    "LEFT JOIN Person AS S ON D.SuspectId = S.Id " +
+                    "WHERE D.isTreated = false " +
+                    "ORDER BY D.timestamp";
 
                 using (var reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        var denonciation = new Denonciation
+                        var denonciation = new DenonciationSQLS
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DenonciationId = reader.GetGuid(reader.GetOrdinal("denonciation_id")),
+                            Timestamp = reader.GetDateTime(reader.GetOrdinal("timestamp")),
+                            Informant = new PersonSQLS
+                            {
+                                FirstName = reader.GetString(reader.GetOrdinal("informant_first_name")),
+                                LastName = reader.GetString(reader.GetOrdinal("informant_last_name")),
+                            },
+                            Suspect = new PersonSQLS
+                            {
+                                FirstName = reader.GetString(reader.GetOrdinal("suspect_first_name")),
+                                LastName = reader.GetString(reader.GetOrdinal("suspect_last_name")),
+                            },
+                            EvasionCountry = reader.GetString(reader.GetOrdinal("evasion_country")),
+                            Offense = reader.GetString(reader.GetOrdinal("offense")),
+                            IsTreated = reader.GetBoolean(reader.GetOrdinal("isTreated"))
                         };
 
-                        denonciations.Add(denonciation);
+                        Denonciation denonciationNew = denonciation.ToDomain();
+                        denonciations.Add(denonciationNew);
                     }
                 }
+
             }
 
             return denonciations;

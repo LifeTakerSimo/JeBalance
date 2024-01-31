@@ -44,7 +44,10 @@ public class Program
         // Database
         services.Configure<DBSettings>(builder.Configuration.GetSection("Jebalance"));
 
-
+        services.AddDbContext<DatabaseContext>(options =>
+            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")),
+            contextLifetime: ServiceLifetime.Scoped,
+            optionsLifetime: ServiceLifetime.Transient);
 
 
         // Adding Authentication

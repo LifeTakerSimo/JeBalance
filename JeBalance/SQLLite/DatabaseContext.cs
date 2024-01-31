@@ -38,7 +38,7 @@ namespace JeBalance.SQLLite
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite(@"Data Source=/Users/simohamedkabbou/Studies/S9/Application n-tiers/Projet/JeBalance/JeBalance/JeBalance.db");
+                optionsBuilder.UseSqlite(@"Data Source=../JeBalance/JeBalance.db");
             }
         }
     } 

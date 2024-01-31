@@ -32,7 +32,6 @@
     <Folder Include="SQLLite\" />
     <Folder Include="SQLLite\Model\" />
     <Folder Include="SQLLite\Configuration\" />
-    <Folder Include="Repos\" />
     <Folder Include="Services\" />
     <Folder Include="Configuration\" />
   </ItemGroup>

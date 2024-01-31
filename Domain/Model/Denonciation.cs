@@ -12,6 +12,8 @@ namespace Domain.Model
         public string Offense { get; set; }
         public string EvasionCountry { get; set; }
         public Guid DenonciationId { get; set; }
+        public bool IsTreated { get; set; }
+
 
         public Denonciation() : base(0)
         {

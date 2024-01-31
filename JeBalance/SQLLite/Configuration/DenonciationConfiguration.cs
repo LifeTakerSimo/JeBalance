@@ -9,7 +9,6 @@ namespace JeBalance.SQLLite.Configuration
     {
         public void Configure(EntityTypeBuilder<DenonciationSQLS> builder)
         {
-
             builder.Property(denonciation => denonciation.Timestamp)
                 .IsRequired();
 
@@ -19,8 +18,7 @@ namespace JeBalance.SQLLite.Configuration
             builder.Property(denonciation => denonciation.EvasionCountry)
                 .HasMaxLength(100);
 
-            builder.HasIndex(d => d.DenonciationId)
-                 .IsUnique();
+            builder.HasKey(denonciation => denonciation.DenonciationId);
         }
     }
 }

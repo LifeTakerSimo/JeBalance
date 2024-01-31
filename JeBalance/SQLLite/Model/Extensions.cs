@@ -56,6 +56,8 @@ namespace JeBalance.Common
                 Suspect = sqls.Suspect.ToDomain(),
                 Offense = sqls.Offense,
                 EvasionCountry = sqls.EvasionCountry,
+                DenonciationId = sqls.DenonciationId,  
+                IsTreated = sqls.IsTreated,
             };
         }
 
@@ -69,7 +71,7 @@ namespace JeBalance.Common
                 Offense = domain.Offense,
                 EvasionCountry = domain.EvasionCountry,
                 DenonciationId = domain.DenonciationId,
-                                
+                IsTreated= domain.IsTreated,
             };
         }
 
