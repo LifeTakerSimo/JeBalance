@@ -14,7 +14,7 @@ public class CreateUserCommand : IRequest<int>
     public bool IsAdmin { get; }
     public bool IsFisc { get; }
 
-    public CreateUserCommand(string email, string username, string password, string role, string firstName, string lastname,bool isVip, bool isAdmin, bool isFisc)
+    public CreateUserCommand(string email, string username, string password, string role, string firstName, string lastname, bool isVip, bool isAdmin, bool isFisc)
     {
         Email = email;
         Username = username;

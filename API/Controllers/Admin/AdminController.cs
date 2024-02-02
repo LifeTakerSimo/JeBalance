@@ -11,7 +11,7 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Admin")] 
+[Authorize(Roles = "Admin")]
 public class AdminController : ControllerBase
 {
     private readonly ILogger<AdminController> _logger;
@@ -68,7 +68,7 @@ public class AdminController : ControllerBase
         try
         {
             _logger.LogInformation($"Attempting to delete VIP: {userName}");
-            var command = new DeleteVipCommand (userName);
+            var command = new DeleteVipCommand(userName);
             var result = await _mediator.Send(command);
             if (result)
             {

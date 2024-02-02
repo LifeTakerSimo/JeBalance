@@ -2,7 +2,7 @@
 
 namespace Domain.Commands
 {
-    public class AddVipCommand : IRequest<bool> 
+    public class AddVipCommand : IRequest<bool>
     {
         public string UserName { get; private set; }
         public string FirstName { get; private set; }

@@ -33,7 +33,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
             };
 
             var user = new User(
-                0, 
+                0,
                 Person,
                 command.Password,
                 command.Username,

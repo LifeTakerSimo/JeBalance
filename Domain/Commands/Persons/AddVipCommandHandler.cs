@@ -41,7 +41,7 @@ namespace Domain.Commands
                     FirstName = command.FirstName,
                     LastName = command.LastName,
                     IsVIP = true,
-                    Email = command.Email              
+                    Email = command.Email
                 };
 
                 await _personRepository.AddAsync(newPerson);

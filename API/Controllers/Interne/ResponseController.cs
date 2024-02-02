@@ -14,7 +14,6 @@ public class ResponseController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<ResponseController> _logger;
 
-
     public ResponseController(IMediator mediator, ILogger<ResponseController> logger)
     {
         _mediator = mediator;

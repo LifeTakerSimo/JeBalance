@@ -4,7 +4,7 @@ using Domain.Model;
 
 namespace Domain.Queries.Denonciations
 {
-    public class GetDenonciationById : IRequest<Denonciation>
+    public class GetDenonciationById : IRequest<(Denonciation, Response)>
     {
         public string UserName { get; private set; }
         public Guid Id { get; private set; }

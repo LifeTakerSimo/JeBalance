@@ -22,42 +22,48 @@ namespace JeBalance.Repos
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 
-            var existingResponse = await _context.Responses
-                .FirstOrDefaultAsync(r => r.DenonciationId == response.DenonciationId);
+            var denonciation = await _context.Denonciations
+                .Include(d => d.Informant)
+                .SingleOrDefaultAsync(d => d.DenonciationId == response.DenonciationId);
 
-            if (response.ResponseType == false)
+            if (denonciation == null || await _context.Responses.AnyAsync(r => r.DenonciationId == response.DenonciationId))
             {
-                var denonciation = await _context.Denonciations
-                    .Include(d => d.Informant)
-                    .FirstOrDefaultAsync(d => d.DenonciationId == response.DenonciationId);
+                return false; // Denonciation not found or Response already exists
+            }
 
-                if (denonciation != null)
+            if (!response.ResponseType)
+            {
+                var informantToUpdate = await _context.Denonciations
+                    .Where(d => d.DenonciationId == response.DenonciationId)
+                    .Select(d => d.Informant)
+                    .FirstOrDefaultAsync();
+
+                if (informantToUpdate != null)
                 {
-                    denonciation.Informant.Rejection += 1;
-                    denonciation.IsTreated = true;
-                    _context.Persons.Update(denonciation.Informant);
-                    _context.Denonciations.Update(denonciation);
-                    await _context.SaveChangesAsync();
+                    var informantEntity = await _context.Persons
+                        .FirstOrDefaultAsync(p => p.Id == informantToUpdate.Id);
+
+                    if (informantEntity != null)
+                    {
+                        informantEntity.Rejection = (informantEntity.Rejection ?? 0) + 1;
+                    }
                 }
             }
 
-            if (existingResponse != null)
-            {
-                return false;
-            }
+            denonciation.IsTreated = true;
 
             try
             {
                 ResponseSQLS responseSQLS = response.ToSQLS();
                 await _context.Responses.AddAsync(responseSQLS);
                 await _context.SaveChangesAsync();
-                return true;
+                return true; 
             }
-
             catch (Exception ex)
             {
                 return false;
             }
         }
+
     }
 }

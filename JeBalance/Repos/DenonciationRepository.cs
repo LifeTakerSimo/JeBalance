@@ -31,23 +31,31 @@ namespace Infrastructure.Repositories
         public async Task<Guid> CreateDenonciationAsync(Denonciation denonciation)
         {
             var denonciationSQLS = denonciation.ToSQLS();
-            denonciationSQLS.DenonciationId = Guid.NewGuid(); 
+            denonciationSQLS.DenonciationId = Guid.NewGuid();
             denonciationSQLS.Timestamp = DateTime.UtcNow.AddMonths(2);
 
             await _context.Denonciations.AddAsync(denonciationSQLS);
             await _context.SaveChangesAsync();
 
-            return denonciationSQLS.DenonciationId; 
+            return denonciationSQLS.DenonciationId;
         }
 
-        public async Task<Denonciation> GetDenonciationAsync(string userName, Guid id)
+        public async Task<(Denonciation, Response)> GetDenonciationAsync(string userName, Guid id)
         {
-            var denonciationSQLS = await _context.Denonciations
+            var denonciation = await _context.Denonciations
                 .Include(d => d.Informant)
                 .Include(d => d.Suspect)
-                .SingleOrDefaultAsync(d => d.DenonciationId == id);
+                .SingleOrDefaultAsync(d => d.DenonciationId == id && d.Informant.UserName == userName);
 
-            return denonciationSQLS?.ToDomain();
+            if (denonciation == null) return (null, null);
+
+            var response = await _context.Responses
+                .SingleOrDefaultAsync(r => r.DenonciationId == id);
+
+            var denonciationDomain = denonciation.ToDomain();
+            var responseDomain = response?.ToDomain();
+
+            return (denonciationDomain, responseDomain);
         }
 
         public async Task UpdateDenonciationAsync(Denonciation denonciation)
@@ -91,7 +99,7 @@ namespace Infrastructure.Repositories
                     {
                         var denonciation = new DenonciationSQLS
                         {
-                             DenonciationId = reader.GetGuid(reader.GetOrdinal("denonciation_id")),
+                            DenonciationId = reader.GetGuid(reader.GetOrdinal("denonciation_id")),
                             Timestamp = reader.GetDateTime(reader.GetOrdinal("timestamp")),
                             Informant = new PersonSQLS
                             {

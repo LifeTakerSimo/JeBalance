@@ -19,7 +19,7 @@ namespace JeBalance.Repos
 {
     public class CalomniateurRepository : ICalomniateurRepository
     {
-        private readonly DatabaseContext _context; 
+        private readonly DatabaseContext _context;
         private readonly string _connectionString;
 
         public CalomniateurRepository(DatabaseContext context, IOptions<DBSettings> dbConfig)

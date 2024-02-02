@@ -22,22 +22,20 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    var apiBaseUrl = '@Model.ApiBaseUrl'; // Ensure this is set correctly in your Razor page model.
+    var apiBaseUrl = '@Model.ApiBaseUrl';
 
     document.getElementById('searchForm').addEventListener('submit', function (event) {
         event.preventDefault();
         var denonciationId = document.getElementById('DenonciationId').value.trim();
         var username = document.getElementById('InformateurUsername').value.trim();
 
-        // Validate Guid format for denonciationId before sending the request
         if (!denonciationId.match(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/)) {
             alert('L\'ID de la dénonciation doit être au format GUID.');
             return;
         }
 
-        // Corrected endpoint usage based on your Swagger documentation
         fetch(`${apiBaseUrl}/api/Denonciation/get_denonciation?Id=${denonciationId}&UserName=${encodeURIComponent(username)}`, {
-            method: 'GET' // GET is the default method, but it's good to be explicit.
+            method: 'GET'
         })
         .then(response => {
             if (!response.ok) {
@@ -52,41 +50,51 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
             .then(data => {
-                // Handle success
                 console.log(data);
-                var treatedMessage = data.isTreated
+                const { denonciation, response } = data; // Destructure the response into denonciation and response objects
+
+                var treatedMessage = denonciation.isTreated
                     ? "Votre dénonciation a été traitée."
                     : "Votre dénonciation n'a pas encore été traitée.";
 
-                var formattedData = `
-        <div>Résultat trouvé:</div>
-        <ul>
-            <li>Date de création: ${new Date(data.timestamp).toLocaleString()}</li>
-            <li>Informateur:
-                <ul>
-                    <li>Prénom: ${data.informant.firstName}</li>
-                    <li>Nom: ${data.informant.lastName}</li>
-                    <li>Email: ${data.informant.email}</li>
-                    <li>Adresse: ${data.informant.streetNumber} ${data.informant.streetName}, ${data.informant.postalCode} ${data.informant.cityName}</li>
-                </ul>
-            </li>
-            <li>Suspect:
-                <ul>
-                    <li>Prénom: ${data.suspect.firstName}</li>
-                    <li>Nom: ${data.suspect.lastName}</li>
-                    <li>Email: ${data.suspect.email}</li>
-                    <li>Adresse: ${data.suspect.streetNumber} ${data.suspect.streetName}, ${data.suspect.postalCode} ${data.suspect.cityName}</li>
-                </ul>
-            </li>
-            <li>Infraction: ${data.offense}</li>
-            <li>Pays d'évasion: ${data.evasionCountry}</li>
-            <li>État de la dénonciation: <strong>${treatedMessage}</strong></li>
-        </ul>
-    `;
+                var responseTypeMessage = response?.responseType
+                    ? "La réponse est positive."
+                    : "La réponse est négative.";
 
-                document.getElementById('responseMessage').innerHTML = formattedData;
-                document.getElementById('responseMessage').className = 'alert alert-success';
-                document.getElementById('responseMessage').style.display = 'block';
+                var amountMessage = response?.amount
+                    ? `Montant impliqué: ${response.amount} €`
+                    : "Montant non spécifié.";
+
+                var formattedData = `
+                <div>Résultat trouvé:</div>
+                <ul>
+                    <li>Date de création: ${new Date(denonciation.timestamp).toLocaleString()}</li>
+                    <li>Informateur:
+                        <ul>
+                            <li>Prénom: ${denonciation.informant.firstName}</li>
+                            <li>Nom: ${denonciation.informant.lastName}</li>
+                            <li>Email: ${denonciation.informant.email}</li>
+                            <li>Adresse: ${denonciation.informant.streetNumber} ${denonciation.informant.streetName}, ${denonciation.informant.postalCode} ${denonciation.informant.cityName}</li>
+                        </ul>
+                    </li>
+                    <li>Suspect:
+                        <ul>
+                            <li>Prénom: ${denonciation.suspect.firstName}</li>
+                            <li>Nom: ${denonciation.suspect.lastName}</li>
+                            <li>Email: ${denonciation.suspect.email}</li>
+                            <li>Adresse: ${denonciation.suspect.streetNumber} ${denonciation.suspect.streetName}, ${denonciation.suspect.postalCode} ${denonciation.suspect.cityName}</li>
+                        </ul>
+                    </li>
+                    <li>Infraction: ${denonciation.offense}</li>
+                    <li>Pays d'évasion: ${denonciation.evasionCountry}</li>
+                    <li>État de la dénonciation: <strong>${treatedMessage}</strong></li>
+                    ${denonciation.isTreated ? `<li>${responseTypeMessage}</li><li>${amountMessage}</li>` : ''}
+                </ul>
+            `;
+
+            document.getElementById('responseMessage').innerHTML = formattedData;
+            document.getElementById('responseMessage').className = 'alert alert-success';
+            document.getElementById('responseMessage').style.display = 'block';
             })
 
         .catch(error => {

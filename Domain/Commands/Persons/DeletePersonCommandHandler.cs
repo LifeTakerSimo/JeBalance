@@ -27,7 +27,7 @@ namespace Domain.Commands.Persons
                     return false;
                 }
                 await _personRepository.DeleteVipCommand(person.UserName);
-                return true; 
+                return true;
             }
             catch (Exception ex)
             {

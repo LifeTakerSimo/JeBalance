@@ -23,7 +23,7 @@ namespace Domain.Commands.Responses
 
         public async Task<bool> Handle(CreateResponseCommand command, CancellationToken cancellationToken)
         {
-            var response = new Response 
+            var response = new Response
             {
                 DenonciationId = command.DenonciationId,
                 Amount = command.Amount,

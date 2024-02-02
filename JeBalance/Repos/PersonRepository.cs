@@ -127,7 +127,7 @@ namespace JeBalance.Repos
 
                 var command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Person WHERE is_vip = 1";
-                
+
                 using (var reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -144,7 +144,7 @@ namespace JeBalance.Repos
                         vips.Add(newPerson);
                     }
                 }
-                
+
             }
 
             return vips;

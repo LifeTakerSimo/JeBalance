@@ -13,7 +13,6 @@ public class DenonciationFiscController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<DenonciationFiscController> _logger;
 
-
     public DenonciationFiscController(IMediator mediator, ILogger<DenonciationFiscController> logger)
     {
         _mediator = mediator;

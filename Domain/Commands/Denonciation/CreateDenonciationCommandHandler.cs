@@ -31,7 +31,7 @@ namespace Domain.Commands.Denonciations
             var informant = informantTask.Result;
             var suspect = suspectTask.Result;
 
-            if (suspect?.IsVIP == true || informant.Rejection >= 3)
+            if (suspect?.IsVIP == true || (informant != null && informant.Rejection >= 3))
             {
                 var isCalomniateur = await _calomniateurRepository.IsCalomniateur(informant.UserName);
                 if (!isCalomniateur)

@@ -4,7 +4,7 @@ using Domain.Model;
 
 namespace API.Ressource
 {
- 
+
     public class DenonciationDTO
     {
         private DenonciationDTO denonciation;
