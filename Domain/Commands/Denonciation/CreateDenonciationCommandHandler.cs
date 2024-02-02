@@ -12,31 +12,50 @@ namespace Domain.Commands.Denonciations
     {
         private readonly IDenonciationRepository _denonciationRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly ICalomniateurRepository _calomniateurRepository;
 
-        public CreateDenonciationCommandHandler(IDenonciationRepository denonciationRepository, IPersonRepository personRepository)
+
+        public CreateDenonciationCommandHandler(IDenonciationRepository denonciationRepository, IPersonRepository personRepository, ICalomniateurRepository calomniateurRepository)
         {
             _denonciationRepository = denonciationRepository;
             _personRepository = personRepository;
+            _calomniateurRepository = calomniateurRepository;
         }
 
         public async Task<Guid> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
         {
             var informantTask = _personRepository.GetByUsernameAsync(command.Informant.UserName);
-            var suspectTask = _personRepository.GetByUsernameAsync(command.Suspect.UserName);
+            var suspectTask = _personRepository.GetPerson(command.Suspect.FirstName, command.Suspect.LastName);
 
             await Task.WhenAll(informantTask, suspectTask);
             var informant = informantTask.Result;
             var suspect = suspectTask.Result;
 
-            if (informant != null && informant.Rejection >= 3)
+            if (suspect?.IsVIP == true || informant.Rejection >= 3)
             {
-                throw new InvalidOperationException("Your denunciations got rejected many times.");
+                var isCalomniateur = await _calomniateurRepository.IsCalomniateur(informant.UserName);
+                if (!isCalomniateur)
+                {
+
+                    var Person = new Person
+                    {
+                        FirstName = informant.FirstName,
+                        LastName = informant.LastName,
+                        Email = informant.Email,
+                        UserName = informant.UserName,
+
+                    };
+
+                    var calo = new Calomniateur(
+                        0,
+                        Person
+                    );
+                    await _calomniateurRepository.AddAsync(calo);
+                }
+
+                throw new InvalidOperationException("You can't denounce a VIP person or Your denunciations got rejected many times");
             }
 
-            if (suspect?.IsVIP == true)
-            {
-                throw new InvalidOperationException("You can't denounce a VIP person.");
-            }
 
             informant = new Person
             {

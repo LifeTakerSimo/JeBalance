@@ -40,7 +40,6 @@ namespace Infrastructure.Repositories
             return denonciationSQLS.DenonciationId; 
         }
 
-
         public async Task<Denonciation> GetDenonciationAsync(string userName, Guid id)
         {
             var denonciationSQLS = await _context.Denonciations
@@ -92,7 +91,7 @@ namespace Infrastructure.Repositories
                     {
                         var denonciation = new DenonciationSQLS
                         {
-                            DenonciationId = reader.GetGuid(reader.GetOrdinal("denonciation_id")),
+                             DenonciationId = reader.GetGuid(reader.GetOrdinal("denonciation_id")),
                             Timestamp = reader.GetDateTime(reader.GetOrdinal("timestamp")),
                             Informant = new PersonSQLS
                             {

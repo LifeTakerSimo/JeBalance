@@ -1,13 +1,7 @@
 ﻿using API.Parameters;
-using Domain.Commands.Denonciations;
-using Domain.Queries.Denonciations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using API.Ressource;
-using Domain.Commands;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Domain.Queries.Persons;
 using Domain.Commands.Responses;
 
 namespace API.Controllers;
@@ -27,16 +21,28 @@ public class ResponseController : ControllerBase
         _logger = logger;
     }
 
+    /*
+     * Allows to create a response of the denonciation if u are a fisc
+     */
+    [Authorize(Roles = "Fisc")]
     [HttpPost]
     [Route("create_Response")]
-    public async Task<IActionResult> CreateResponse([FromBody] CreateDenonciationParameter parameter)
+    public async Task<IActionResult> CreateResponse([FromBody] CreateResponseParameter parameter)
     {
         try
         {
             _logger.LogInformation("Attempting to create a response for Denonciations");
             var addResponseCommand = new CreateResponseCommand(parameter.DenonciationId, parameter.Amount, parameter.ResponseType);
             var result = await _mediator.Send(addResponseCommand);
-            return Ok(result);
+
+            if (result)
+            {
+                return Ok("Response created successfully.");
+            }
+            else
+            {
+                return BadRequest("A response already exists for this denonciations.");
+            }
         }
         catch (Exception ex)
         {

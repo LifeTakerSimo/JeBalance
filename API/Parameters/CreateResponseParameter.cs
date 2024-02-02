@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Domain.Model;
 
 namespace API.Parameters;
-public class CreateDenonciationParameter
+public class CreateResponseParameter
 {
     public Guid DenonciationId { get; set; }
 
@@ -11,7 +11,7 @@ public class CreateDenonciationParameter
 
     public bool ResponseType { get; set; }
 
-    public CreateDenonciationParameter()
+    public CreateResponseParameter()
     {
     }
 }

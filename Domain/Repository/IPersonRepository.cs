@@ -10,6 +10,7 @@ public interface IPersonRepository
     Task<Person> GetByIdAsync(int id);
     Task<Person> GetByUsernameAsync(string username);
     Task<bool> AddAsync(Person person);
+    Task<Person> GetPerson(string firstName, string lastname);
     Task<bool> UpdateAsync(Person person);
     Task<bool> DeleteAsync(int id);
     Task<bool> ExistsByUsernameAsync(string username);

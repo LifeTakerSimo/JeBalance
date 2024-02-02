@@ -23,6 +23,7 @@ namespace Infrastructure
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IResponseRepository, ResponseRepository>();
+            services.AddScoped<ICalomniateurRepository, CalomniateurRepository>();
 
             return services;
         }

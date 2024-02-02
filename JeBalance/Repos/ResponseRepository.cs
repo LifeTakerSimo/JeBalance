@@ -25,9 +25,25 @@ namespace JeBalance.Repos
             var existingResponse = await _context.Responses
                 .FirstOrDefaultAsync(r => r.DenonciationId == response.DenonciationId);
 
+            if (response.ResponseType == false)
+            {
+                var denonciation = await _context.Denonciations
+                    .Include(d => d.Informant)
+                    .FirstOrDefaultAsync(d => d.DenonciationId == response.DenonciationId);
+
+                if (denonciation != null)
+                {
+                    denonciation.Informant.Rejection += 1;
+                    denonciation.IsTreated = true;
+                    _context.Persons.Update(denonciation.Informant);
+                    _context.Denonciations.Update(denonciation);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             if (existingResponse != null)
             {
-                return false; 
+                return false;
             }
 
             try
@@ -37,6 +53,7 @@ namespace JeBalance.Repos
                 await _context.SaveChangesAsync();
                 return true;
             }
+
             catch (Exception ex)
             {
                 return false;

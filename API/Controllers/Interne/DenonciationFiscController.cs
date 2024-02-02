@@ -1,13 +1,7 @@
-﻿using API.Parameters;
-using Domain.Commands.Denonciations;
-using Domain.Queries.Denonciations;
+﻿using Domain.Queries.Denonciations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using API.Ressource;
-using Domain.Commands;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Domain.Queries.Persons;
 
 namespace API.Controllers;
 
@@ -26,6 +20,9 @@ public class DenonciationFiscController : ControllerBase
         _logger = logger;
     }
 
+    /*
+     * Allows to get the list of denonciations if the user is a Fisc
+     */
     [Authorize(Roles = "Fisc")]
     [HttpGet]
     [Route("get_all_denonciations")]

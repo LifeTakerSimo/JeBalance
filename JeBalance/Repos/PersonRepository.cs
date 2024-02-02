@@ -111,6 +111,12 @@ namespace JeBalance.Repos
             return person;
         }
 
+        public async Task<Person> GetPerson(string firstName, string lastName)
+        {
+            var person = await _context.Persons.FirstOrDefaultAsync(p => p.FirstName == firstName && p.LastName == lastName);
+            return person?.ToDomain();
+        }
+
         public async Task<List<Person>> GetAllVipsAsync()
         {
             var vips = new List<Person>();

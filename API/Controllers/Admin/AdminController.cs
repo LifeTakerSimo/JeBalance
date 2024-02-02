@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using MediatR;
-using System;
-using System.Threading.Tasks;
-using Domain.Model;
 using Domain.Commands.Persons;
 using Domain.Queries.Persons;
 using API.Authentication;
@@ -34,6 +29,9 @@ public class AdminController : ControllerBase
         _mediator = mediator;
     }
 
+    /**
+     * Allows to add new VIP or to make a person a VIP if he's already a person
+     */
     [HttpPost("add-vip")]
     public async Task<IActionResult> AddVip([FromBody] PersonVip command)
     {
@@ -45,7 +43,14 @@ public class AdminController : ControllerBase
 
             var result = await _mediator.Send(addVipCommand);
 
-            return Ok(result);
+            if (result)
+            {
+                return Ok("the vip created successfully.");
+            }
+            else
+            {
+                return BadRequest("A vip already exists with the same username");
+            }
         }
         catch (Exception ex)
         {
@@ -54,6 +59,9 @@ public class AdminController : ControllerBase
         }
     }
 
+    /**
+    * Allows to remove a VIP
+    */
     [HttpDelete("delete-vip/{userName}")]
     public async Task<IActionResult> DeleteVip(string userName)
     {
@@ -62,7 +70,14 @@ public class AdminController : ControllerBase
             _logger.LogInformation($"Attempting to delete VIP: {userName}");
             var command = new DeleteVipCommand (userName);
             var result = await _mediator.Send(command);
-            return Ok(result);
+            if (result)
+            {
+                return Ok("the vip deleted.");
+            }
+            else
+            {
+                return BadRequest("Error processing request ");
+            }
         }
         catch (Exception ex)
         {
@@ -71,6 +86,9 @@ public class AdminController : ControllerBase
         }
     }
 
+    /*
+     * Allows to get a VIP
+     */
     [HttpGet("get-vip/{userName}")]
     public async Task<IActionResult> GetVip(string userName)
     {
@@ -88,6 +106,9 @@ public class AdminController : ControllerBase
         }
     }
 
+    /*
+     * Allows to get all the VIPs
+     */
     [HttpGet("get-all-vips")]
     public async Task<IActionResult> GetAllVips()
     {

@@ -2,7 +2,6 @@
 using Domain.Commands.Denonciations;
 using Domain.Queries.Denonciations;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Ressource;
 using Microsoft.AspNetCore.Cors;
@@ -20,6 +19,9 @@ public class DenonciationController : ControllerBase
         _mediator = mediator;
     }
 
+    /*
+     * Allows to create a denonciation
+     */
     [EnableCors("AllowRazorPageOrigin")]
     [HttpPost]
     [Route("create_denonciation")]

@@ -25,6 +25,7 @@
     <None Remove="Queries\Denonciations\" />
     <None Remove="Commands\Persons\" />
     <None Remove="Queries\Persons\" />
+    <None Remove="Commands\Colmniateur\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
@@ -38,5 +39,6 @@
     <Folder Include="Queries\Denonciations\" />
     <Folder Include="Commands\Persons\" />
     <Folder Include="Queries\Persons\" />
+    <Folder Include="Commands\Colmniateur\" />
   </ItemGroup>
 </Project>

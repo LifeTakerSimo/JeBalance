@@ -6,16 +6,10 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Logging;
 using Domain.Commands;
-using Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Domain.Queries.Users;
 using JeBalance.SQLLite;
-using Microsoft.AspNetCore.Authorization;
 using Domain.Service;
-using JeBalance.Services;
 
 namespace API.Controllers;
 
@@ -103,6 +97,11 @@ public class AuthenticateController : ControllerBase
         }
     }
 
+    /*
+     * Allows to add user to the application ( could be admin, fisc, vip )
+     */
+
+    // [Authorize(Roles = "Admin")] if make the test easier 
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -150,7 +149,9 @@ public class AuthenticateController : ControllerBase
         }
     }
 
-
+    /*
+     * Allows to get the token 
+     */
     private JwtSecurityToken GetToken(List<Claim> authClaims)
     {
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
