@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(data => {
                 console.log(data);
-                const { denonciation, response } = data; // Destructure the response into denonciation and response objects
+                const { denonciation, response } = data;
 
                 var treatedMessage = denonciation.isTreated
                     ? "Votre dénonciation a été traitée."
